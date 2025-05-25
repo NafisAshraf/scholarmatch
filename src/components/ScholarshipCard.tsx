@@ -41,7 +41,7 @@ export function ScholarshipCard({
   onToggleSubtask,
   getDeadlineStatus,
 }: ScholarshipCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const completedSubtasks = scholarship.subtasks.filter(
@@ -64,10 +64,8 @@ export function ScholarshipCard({
   return (
     <>
       <Card
-        className={`border-0 shadow-lg transition-all duration-300 hover:shadow-xl ${
-          scholarship.completed
-            ? "bg-green-50/80 dark:bg-green-900/20"
-            : "bg-white/80 dark:bg-gray-800/80"
+        className={` ${
+          scholarship.completed ? "bg-green-50/80 dark:bg-green-900/20" : ""
         } backdrop-blur-sm`}
       >
         <CardHeader className="pb-4">
@@ -75,7 +73,7 @@ export function ScholarshipCard({
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h3
-                  className={`text-lg font-semibold transition-colors ${
+                  className={`text-lg font-bold transition-colors ${
                     scholarship.completed
                       ? "text-green-700 dark:text-green-300 line-through"
                       : "text-gray-900 dark:text-white"
@@ -127,7 +125,7 @@ export function ScholarshipCard({
           </div>
 
           {totalSubtasks > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-2 pt-5 px-5">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-300">
                   Progress: {completedSubtasks}/{totalSubtasks} tasks
@@ -156,7 +154,7 @@ export function ScholarshipCard({
                 {scholarship.subtasks.map((subtask) => (
                   <div
                     key={subtask.id}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-gray-50/80 dark:bg-gray-700/50 hover:bg-gray-100/80 dark:hover:bg-gray-700/80 transition-colors"
+                    className="flex items-start gap-3 p-3 rounded-lg  hover:bg-gray-100/80 dark:hover:bg-gray-700/80 transition-colors"
                   >
                     <Checkbox
                       checked={subtask.completed}

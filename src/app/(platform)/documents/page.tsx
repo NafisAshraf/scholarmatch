@@ -128,7 +128,7 @@ const Index = () => {
     useState<DocumentCategory[]>(initialDocuments);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
-  const [viewMode, setViewMode] = useState<"tile" | "list">("tile");
+  const [viewMode, setViewMode] = useState<"tile" | "list">("list");
 
   const handleFileUpload = (categoryId: string, filesToUpload: File[]) => {
     const newFiles: UploadedFile[] = filesToUpload.map((file) => ({
@@ -173,15 +173,13 @@ const Index = () => {
     documents.length > 0 ? (categoriesWithFiles / documents.length) * 100 : 0;
 
   return (
-    <div className="min-h-screen py-16 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-cyan-900/20 dark:to-blue-900/20 transition-colors duration-300">
+    <div className="min-h-screen py-16">
       {/* Header */}
       <div className="">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                Documents
-              </h1>
+              <h1 className="text-4xl font-bold text-gradient">Documents</h1>
               <p className="text-gray-600 dark:text-slate-400 mt-1">
                 Organize and track your application documents
               </p>

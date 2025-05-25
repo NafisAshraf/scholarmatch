@@ -4,7 +4,7 @@ import { RadialChart } from "@/components/radial-chart";
 
 export default function ScholarshipPage() {
   return (
-    <div className="flex gap-4 px-4 py-10 ">
+    <div className="flex gap-4 px-4 py-16 ">
       <div className="mx-auto w-full max-w-2xl">
         <div className="flex flex-col gap-8">
           <div className="space-y-4">
@@ -45,10 +45,32 @@ export default function ScholarshipPage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground">📅</span>
-                <span>04/23/2025</span>
+                <span className="">08/23/2025</span>
               </div>
             </div>
-            <RadialChart percentage={80} label="Match" />
+            <div className="">
+              <div className="bg-orange-100 rounded-lg p-6 text-center h-full">
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="text-2xl text-orange-600 mb-1">
+                    Expires in
+                  </div>
+                  <div className="text-4xl font-bold text-orange-600">
+                    {Math.ceil(
+                      (new Date("2025-08-23").getTime() -
+                        new Date().getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    )}
+                  </div>
+                  <div className="text-sm text-orange-600">Days</div>
+                </div>
+                <a
+                  href="/tasks/2d6de5e4-185a-4fcf-a8d7-a61913760b94"
+                  className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  Apply Now
+                </a>
+              </div>
+            </div>
           </div>
           <div className="space-y-6">
             <section className="space-y-3">
@@ -138,7 +160,7 @@ export default function ScholarshipPage() {
         </div>
       </div>
       <div>
-        <p className="text-xl font-semibold pb-5">Progress</p>
+        <p className="text-xl font-semibold pb-5">Procedure</p>
         <div className="pe-7">
           <Progress />
         </div>

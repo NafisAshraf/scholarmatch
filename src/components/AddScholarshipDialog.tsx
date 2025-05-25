@@ -76,8 +76,8 @@ export function AddScholarshipDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            Add New Scholarship
+          <DialogTitle className="text-xl font-semibold text-gradient">
+            Add New Task
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -161,9 +161,9 @@ export function AddScholarshipDialog({
             <Button
               type="submit"
               disabled={!title.trim() || !deadline}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              className="flex-1 bg-button"
             >
-              Add Scholarship
+              Add Task
             </Button>
           </div>
         </form>

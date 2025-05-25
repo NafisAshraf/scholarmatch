@@ -257,14 +257,12 @@ const Index = () => {
   })();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-cyan-900/20 dark:to-blue-900/20 transition-colors duration-300">
+    <div className="min-h-screen ">
       <div className="container mx-auto px-4 py-16 max-w-5xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-              Tasks
-            </h1>
+            <h1 className="text-4xl font-bold">Tasks</h1>
             <p className="text-gray-600 dark:text-gray-300 mt-2">
               Manage your scholarship applications with ease
             </p>
@@ -282,12 +280,9 @@ const Index = () => {
                 <Moon className="h-5 w-5" />
               )}
             </Button>
-            <Button
-              onClick={() => setIsAddDialogOpen(true)}
-              className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
-            >
+            <Button onClick={() => setIsAddDialogOpen(true)} className="">
               <Plus className="h-4 w-4 mr-2" />
-              Add Scholarship
+              Add Task
             </Button>
           </div>
         </div>
@@ -311,51 +306,51 @@ const Index = () => {
         {/* Stats */}
         {totalCount > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Card className="border-0 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <Card className="">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <Calendar className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <div className="p-4 me-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <Calendar className="h-5 w-5 text-blue-600 dark:text-cyan-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className=" text-gray-600 dark:text-gray-300">
                       Total Applications
                     </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">
                       {totalCount}
                     </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-0 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <Card className="">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                  <div className="p-4 me-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                     <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className=" text-gray-600 dark:text-gray-300">
                       Completed
                     </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">
                       {completedCount}
                     </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="border-0 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <Card className="">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                  <div className="p-4 me-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
                     <Circle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
                       In Progress
                     </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">
                       {totalCount - completedCount}
                     </p>
                   </div>
@@ -367,21 +362,21 @@ const Index = () => {
 
         {/* Scholarships List (Tabbed) */}
         {filteredScholarships.length === 0 ? (
-          <Card className="border-0 shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+          <Card className="">
             <CardContent className="p-12 text-center">
               <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 rounded-full flex items-center justify-center">
                 <Calendar className="h-12 w-12 text-cyan-600 dark:text-cyan-400" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {tab === "completed"
-                  ? "No completed scholarships"
+                  ? "No completed tasks"
                   : tab === "progress"
-                  ? "No in-progress scholarships"
-                  : "No scholarships yet"}
+                  ? "No in-progress tasks"
+                  : "No tasks yet"}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
                 {tab === "all"
-                  ? "Start tracking your scholarship applications by adding your first one"
+                  ? "Start tracking your tasks by adding your first one"
                   : "Nothing to see here yet!"}
               </p>
               <Button
@@ -389,7 +384,7 @@ const Index = () => {
                 className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Add Scholarship
+                Add Task
               </Button>
             </CardContent>
           </Card>

@@ -32,7 +32,7 @@ export function RadialChart({ percentage, label }: RadialChartProps) {
   const config = getChartConfig(label);
 
   return (
-    <Card className="flex flex-col bg-transparent border-none p-0">
+    <Card className="flex flex-col bg-transparent border-none shadow-none p-0">
       <CardContent className="flex-1 ">
         <ChartContainer
           config={config}

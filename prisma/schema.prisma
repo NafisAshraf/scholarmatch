@@ -435,9 +435,10 @@ model scholarships {
   amount_min                Int?
   amount_max                Int?
   amount_display            String?
-  note                      String?
+  application_url           String?
   created_at                DateTime                    @default(now()) @db.Timestamptz(6)
   updated_at                DateTime                    @default(now()) @db.Timestamptz(6)
+  emoji                     String?
   scholarship_countries     scholarship_countries[]
   scholarship_degree_levels scholarship_degree_levels[]
   scholarship_funding_types scholarship_funding_types[]
@@ -502,6 +503,7 @@ model subtasks {
   due_date            DateTime?             @db.Date
   created_at          DateTime              @default(now()) @db.Timestamptz(6)
   updated_at          DateTime              @default(now()) @db.Timestamptz(6)
+  description         String?
   subtask_attachments subtask_attachments[]
   user_tasks          user_tasks            @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
