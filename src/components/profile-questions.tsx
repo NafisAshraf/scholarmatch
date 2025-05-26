@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function SOPForm() {
+const ProfileQuestions = () => {
   const [message, setMessage] = useState("");
   const [userProfile, setUserProfile] = useState("");
   const [response, setResponse] = useState("");
@@ -27,7 +27,7 @@ export default function SOPForm() {
 
   return (
     <div>
-      <h1>Test SOP API</h1>
+      <h1>Profile Questions</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -47,4 +47,6 @@ export default function SOPForm() {
       <pre>{JSON.stringify(response, null, 2)}</pre>
     </div>
   );
-}
+};
+
+export default ProfileQuestions;

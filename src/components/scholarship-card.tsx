@@ -22,77 +22,27 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Button } from "./ui/button";
-import { useAddTask, StepInput } from "@/hooks/use-add-task";
 import Link from "next/link";
-
-interface Country {
-  id: number;
-  name: string;
-}
-
-interface DegreeLevel {
-  id: number;
-  name: string;
-}
-
-interface Subject {
-  id: number;
-  name: string;
-}
-
-interface FundingType {
-  id: number;
-  name: string;
-}
-
-interface ScholarshipCountry {
-  countries: Country;
-}
-
-interface ScholarshipDegreeLevel {
-  degree_levels: DegreeLevel;
-}
-
-interface ScholarshipSubject {
-  subjects: Subject;
-}
-
-interface ScholarshipFundingType {
-  funding_types: FundingType;
-}
-
-interface Step {
-  name: string;
-}
-
-interface Scholarship {
-  id: string;
-  title: string;
-  deadline: string | null;
-  amount_max: number | null;
-  amount_min: number | null;
-  created_at: string;
-  source_url: string;
-  updated_at: string;
-  emoji: string | null;
-  description: string | null;
-  amount_display: string | null;
-  application_url: string | null;
-  scholarship_countries: ScholarshipCountry[];
-  scholarship_degree_levels: ScholarshipDegreeLevel[];
-  scholarship_funding_types: ScholarshipFundingType[];
-  scholarship_subjects: ScholarshipSubject[];
-  steps: Step[];
-}
+import { useAddJSONScholarship } from "@/hooks/useJSONscholarships";
+import { useState } from "react";
 
 interface ScholarshipCardProps {
-  id: string;
-  user_id: string;
-  scholarship_id: string;
-  match_score: number | null;
-  selected: boolean;
-  added_at: string;
-  scholarships: Scholarship;
+  id: number;
+  title: string;
+  amount: string;
+  status: string;
+  country: string;
+  subject: string;
+  deadline: string;
+  source_url: string;
+  university: string;
+  description: string;
+  degree_level: string;
+  matching_score: number;
+  application_url: string;
+  eligibility_criteria: string;
+  eligible_nationality: string;
+  application_procedure: string;
 }
 
 function formatDeadline(deadline: string) {
@@ -124,68 +74,78 @@ function formatDeadline(deadline: string) {
 
 export function ScholarshipCard({
   id,
-  user_id,
-  scholarship_id,
-  match_score,
-  selected,
-  added_at,
-  scholarships,
+  title,
+  amount,
+  status,
+  country,
+  subject,
+  deadline,
+  source_url,
+  university,
+  description,
+  degree_level,
+  matching_score,
+  application_url,
+  eligibility_criteria,
+  eligible_nationality,
+  application_procedure,
 }: ScholarshipCardProps) {
-  const deadline = scholarships.deadline
-    ? formatDeadline(scholarships.deadline)
-    : null;
+  const formattedDeadline = deadline ? formatDeadline(deadline) : null;
+  const addScholarshipMutation = useAddJSONScholarship();
+  const [added, setAdded] = useState(status === "added");
 
-  const countries = scholarships.scholarship_countries
-    .map((c) => c.countries.name)
-    .slice(0, 2); // Limit to first 2 countries
-
-  const degreeLevel =
-    scholarships.scholarship_degree_levels[0]?.degree_levels.name;
-  const subjects = scholarships.scholarship_subjects.slice(0, 3); // Limit to first 3 subjects
-
-  console.log(scholarships.steps);
-
-  const {
-    mutate: addTask,
-    isPending: isAddingTask,
-    isSuccess: isTaskAdded,
-  } = useAddTask();
-
-  // Convert scholarships.steps to StepInput[]
-  const steps: StepInput[] = (scholarships.steps as any[]).map((step, idx) => ({
-    id: step.id ?? idx,
-    title: step.title ?? step.name ?? "",
-    description: step.description ?? "",
-    step_number: step.step_number ?? idx + 1,
-    required_doc: step.required_doc ?? null,
-    scholarship_id: scholarships.id,
-  }));
+  const handleAdd = () => {
+    if (added) return;
+    addScholarshipMutation.mutate(
+      {
+        id,
+        title,
+        amount,
+        status,
+        country,
+        subject,
+        deadline,
+        source_url,
+        university,
+        description,
+        degree_level,
+        matching_score,
+        application_url,
+        eligibility_criteria,
+        eligible_nationality,
+        application_procedure,
+      },
+      {
+        onSuccess: () => setAdded(true),
+      }
+    );
+  };
 
   return (
     <>
-      <Card className="group relative overflow-hidden  border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.25 max-w-md">
+      <Card className="group relative overflow-hidden border hover:shadow-lg transition-all duration-300 hover:-translate-y-0.25 max-w-md">
         {/* Match Score Badge - Top Right Corner */}
-        {match_score && (
+        {matching_score && (
           <div className="absolute top-4 right-4 z-10">
-            <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-0  px-3 py-1">
+            <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-0 px-3 py-1">
               <ArrowUpRightIcon className="size-3 mr-1" />
-              {match_score}%
+              {matching_score}%
             </Badge>
           </div>
         )}
 
         <CardHeader className="pb-1">
           <CardTitle className="text-lg font-bold leading-tight line-clamp-2 pr-16">
-            {scholarships.title}
+            {title}
           </CardTitle>
 
           {/* Amount - Prominent Display */}
           <div className="flex items-center gap-2 mt-2">
-            {!scholarships.amount_display?.includes("$") && (
+            {!amount?.includes("$") && (
               <DollarSignIcon className="size-4 text-cyan-600" />
             )}
             <div className="font-bold text-xl bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-              {scholarships.amount_display || "Amount TBD"}
+              {amount || "Amount TBD"}
             </div>
           </div>
         </CardHeader>
@@ -196,70 +156,61 @@ export function ScholarshipCard({
             {/* First Column - Country and Degree */}
             <div className="space-y-2">
               {/* Location */}
-              {countries.length > 0 && (
+              {country && (
                 <div className="flex items-center gap-1.5">
                   <MapPinIcon className="size-4 text-cyan-600 dark:text-white" />
-                  <span className="text-sm font-medium">
-                    {countries.join(", ")}
-                    {scholarships.scholarship_countries.length > 2 && (
-                      <span className="text-slate-500 dark:text-white">
-                        {" "}
-                        +{scholarships.scholarship_countries.length - 2}
-                      </span>
-                    )}
-                  </span>
+                  <span className="text-sm font-medium">{country}</span>
                 </div>
               )}
 
               {/* Degree Level */}
-              {degreeLevel && (
+              {degree_level && (
                 <div className="flex items-center gap-1.5">
                   <GraduationCapIcon className="size-4 text-cyan-600 dark:text-white" />
-                  <span className="text-sm font-medium ">{degreeLevel}</span>
+                  <span className="text-sm font-medium">{degree_level}</span>
                 </div>
               )}
             </div>
 
             {/* Second Column - Deadline */}
             <div className="flex justify-end">
-              {deadline && (
+              {formattedDeadline && (
                 <div className="text-center px-3 py-2 rounded-lg border bg-slate-50 border-slate-200 dark:bg-transparent dark:border-secondary">
                   <div className="pe-1 flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
                     <CalendarIcon className="size-3" />
-                    {deadline.text}
+                    {formattedDeadline.text}
                   </div>
-                  <div className="text-md font-medium ">{deadline.subText}</div>
+                  <div className="text-md font-medium">
+                    {formattedDeadline.subText}
+                  </div>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Subjects Row */}
-          {subjects.length > 0 && (
+          {/* Subject Row */}
+          {subject && (
             <div className="flex flex-wrap gap-1.5">
-              {subjects.map((subject) => (
-                <Badge
-                  key={subject.subjects.id}
-                  variant="secondary"
-                  className="bg-cyan-50 dark:bg-cyan-900/50 text-cyan-700 dark:text-cyan-200 border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900 transition-colors text-xs"
-                >
-                  {subject.subjects.name}
-                </Badge>
-              ))}
-              {scholarships.scholarship_subjects.length > 3 && (
-                <Badge
-                  variant="secondary"
-                  className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs"
-                >
-                  +{scholarships.scholarship_subjects.length - 3} more
-                </Badge>
-              )}
+              <Badge
+                variant="secondary"
+                className="bg-cyan-50 dark:bg-cyan-900/50 text-cyan-700 dark:text-cyan-200 border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900 transition-colors text-xs"
+              >
+                {subject}
+              </Badge>
+            </div>
+          )}
+
+          {/* University */}
+          {university && (
+            <div className="flex items-center gap-1.5">
+              <BookOpenIcon className="size-4 text-cyan-600 dark:text-white" />
+              <span className="text-sm font-medium">{university}</span>
             </div>
           )}
         </CardContent>
 
         <CardFooter className="gap-3 pt-0">
-          <Link href="/scholarship">
+          <Link href={`/scholarship/${id}`}>
             <Button
               variant="outline"
               className="flex-1 group/btn hover:bg-cyan-50 border-slate-200 hover:border-cyan-300 transition-all duration-200"
@@ -270,40 +221,33 @@ export function ScholarshipCard({
           </Link>
 
           <Button
-            onClick={() => {
-              if (!selected && !isAddingTask && !isTaskAdded) {
-                addTask({
-                  scholarshipId: scholarships.id,
-                  deadline: scholarships.deadline,
-                  steps,
-                });
-              }
-            }}
-            variant={selected || isTaskAdded ? "secondary" : "default"}
-            className={`flex-1 transition-all duration-200 ${
-              selected || isTaskAdded
-                ? "bg-cyan-50 text-cyan-700 border-cyan-200 hover:bg-cyan-100"
-                : "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700  shadow-cyan-500/25"
-            }`}
-            disabled={isAddingTask || selected || isTaskAdded}
+            variant="default"
+            className="flex-1 transition-all duration-200 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 shadow-cyan-500/25"
+            onClick={handleAdd}
+            disabled={added || addScholarshipMutation.isPending}
           >
-            {isAddingTask ? (
-              <span>Adding...</span>
-            ) : selected || isTaskAdded ? (
-              <>
-                <CheckIcon className="size-4 " />
-                <span>Added</span>
-              </>
+            {added ? (
+              <CheckIcon className="size-4" />
             ) : (
-              <>
-                <PlusIcon className="size-4 " />
-                <span>Add to Dashboard</span>
-              </>
+              <PlusIcon className="size-4" />
             )}
+            <span>{added ? "Added" : "Add to Dashboard"}</span>
           </Button>
+          {/* Debug: Show mutation state */}
+          {/* <div className="text-xs mt-2">
+            <div>Status: {addScholarshipMutation.status}</div>
+            <div>isPending: {String(addScholarshipMutation.isPending)}</div>
+            <div>isSuccess: {String(addScholarshipMutation.isSuccess)}</div>
+            <div>isError: {String(addScholarshipMutation.isError)}</div>
+            <div>isIdle: {String(addScholarshipMutation.isIdle)}</div>
+            {addScholarshipMutation.isError && (
+              <div className="text-red-500">
+                Error: {addScholarshipMutation.error?.message}
+              </div>
+            )}
+          </div> */}
         </CardFooter>
       </Card>
-      {/* <pre>{JSON.stringify(scholarships.steps, null, 2)}</pre> */}
     </>
   );
 }
