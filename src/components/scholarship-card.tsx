@@ -291,13 +291,13 @@ export function ScholarshipCard({
               <span>Adding...</span>
             ) : selected || isTaskAdded ? (
               <>
-                <CheckIcon className="size-4 mr-2" />
+                <CheckIcon className="size-4 " />
                 <span>Added</span>
               </>
             ) : (
               <>
-                <PlusIcon className="size-4 mr-2" />
-                <span>Add to Tasks</span>
+                <PlusIcon className="size-4 " />
+                <span>Add to Dashboard</span>
               </>
             )}
           </Button>

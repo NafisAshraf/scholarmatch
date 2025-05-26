@@ -46,18 +46,21 @@ export default function ProfileDropdown() {
     <div className="w-full">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-auto px-3 hover:bg-transparent">
-            <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-white pb-[2px]">
+          <Button
+            variant="ghost"
+            className="h-auto p-0 m-0 hover:bg-transparent"
+          >
+            <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-white ">
               {fullName.charAt(0)}
             </div>
-            <ChevronDownIcon
+            {/* <ChevronDownIcon
               size={16}
               className="opacity-60"
               aria-hidden="true"
-            />
+            /> */}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="max-w-64">
+        <DropdownMenuContent align="end" className="max-w-64 ms-4 mb-3">
           <DropdownMenuLabel className="flex min-w-0 flex-col">
             <span className="text-foreground truncate text-sm font-medium">
               {fullName}

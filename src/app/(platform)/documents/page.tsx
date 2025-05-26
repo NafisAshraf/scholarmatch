@@ -173,7 +173,7 @@ const Index = () => {
     documents.length > 0 ? (categoriesWithFiles / documents.length) * 100 : 0;
 
   return (
-    <div className="min-h-screen py-16">
+    <div className="min-h-screen py-16 bg-gradient">
       {/* Header */}
       <div className="">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -185,19 +185,6 @@ const Index = () => {
               </p>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700"
-                aria-label="Toggle theme"
-              >
-                {theme === "dark" ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
-              </Button>
               <Button
                 variant="outline"
                 size="icon"
@@ -223,7 +210,7 @@ const Index = () => {
           </div>
 
           {/* Progress Section */}
-          <div className="mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-700 dark:to-indigo-800 rounded-lg p-6 text-white">
+          <div className="mt-6 bg-gradient-to-r from-blue-500 to-cyan-600 dark:from-blue-700 dark:to-indigo-800 rounded-lg p-6 text-white">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold">Application Progress</h3>
               <span className="text-2xl font-bold">
@@ -232,7 +219,7 @@ const Index = () => {
             </div>
             <Progress
               value={completionPercentage}
-              className="h-3 bg-white/20 dark:bg-white/30"
+              className="h-3 bg-white/70 dark:bg-white/30 [&>div]:bg-white"
             />
             <p className="mt-2 text-blue-100 dark:text-blue-200">
               {categoriesWithFiles} of {documents.length} document categories

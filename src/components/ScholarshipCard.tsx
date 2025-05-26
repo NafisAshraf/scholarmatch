@@ -12,6 +12,7 @@ import {
   Trash2,
   Edit,
   Plus,
+  ArrowUpRightIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -19,8 +20,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Scholarship, Subtask } from "@/app/(platform)/tasks/page";
+import { Scholarship, Subtask } from "@/app/(platform)/dashboard/page";
 import { EditScholarshipDialog } from "@/components/EditScholarshipDialog";
+import Link from "next/link";
 
 interface ScholarshipCardProps {
   scholarship: Scholarship;
@@ -41,7 +43,7 @@ export function ScholarshipCard({
   onToggleSubtask,
   getDeadlineStatus,
 }: ScholarshipCardProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const completedSubtasks = scholarship.subtasks.filter(
@@ -141,13 +143,21 @@ export function ScholarshipCard({
 
         {totalSubtasks > 0 && (
           <CardContent className="pt-0">
-            <Button
-              variant="ghost"
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="w-full justify-start text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-            >
-              {isExpanded ? "Hide" : "Show"} Tasks ({totalSubtasks})
-            </Button>
+            <div className="flex items-center justify-between">
+              <Button
+                variant="ghost"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="justify-start text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+              >
+                {isExpanded ? "Hide" : "Show"} Tasks ({totalSubtasks})
+              </Button>
+              <Link href="/dashboard/1">
+                <Button variant="gradient">
+                  <ArrowUpRightIcon className="h-4 w-4" />
+                  Apply Now
+                </Button>
+              </Link>
+            </div>
 
             {isExpanded && (
               <div className="mt-4 space-y-3">

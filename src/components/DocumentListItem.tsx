@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, Trash2, Upload } from "lucide-react";
+import { FileText, Info, Trash2, Upload } from "lucide-react";
 
 interface UploadedFile {
   id: string;
@@ -49,13 +49,13 @@ const DocumentListItem = ({
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-sm">
+    <div className="p-4 border rounded-lg shadow-sm bg-background">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <div className={`${category.color} p-3 rounded-lg`}>
-            <Icon className="h-6 w-6 text-white" />
+            <Icon className="h-5 w-5 text-white" />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 ms-1">
             <h3 className="text-lg font-semibold truncate">{category.name}</h3>
             <p className="text-sm truncate">{category.description}</p>
           </div>
@@ -100,9 +100,13 @@ const DocumentListItem = ({
         </div>
       )}
       {category.files.length === 0 && (
-        <div className="mt-4 pl-0 sm:pl-12 text-sm">
-          No documents uploaded for this category. Click "Manage Files" to
-          upload.
+        <div className="mt-4 pl-0 sm:pl-12 text-xs text-muted-foreground">
+          <span className="flex items-center">
+            <Info className="p-1 m-0.5" />
+            <p>
+              No documents uploaded for this category. Click "Upload" to upload.
+            </p>
+          </span>
         </div>
       )}
     </div>

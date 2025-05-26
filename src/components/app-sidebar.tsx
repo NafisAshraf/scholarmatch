@@ -1,55 +1,46 @@
 "use client";
 
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import {
-  AudioWaveform,
-  Blocks,
-  Calendar,
   Command,
   FileText,
-  GalleryVerticalEnd,
-  Home,
-  Inbox,
-  MessageCircleQuestion,
   Search,
-  Settings2,
+  User2,
+  Home,
+  GraduationCap,
+  Sparkle,
+  BookOpen,
+  Award,
   Sparkles,
-  Trash2,
-  User,
 } from "lucide-react";
 
-import { NavScholarships } from "@/components/nav-scholarships";
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
+import { Label } from "@/components/ui/label";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
+  SidebarInput,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
+import ProfileDropdown from "./profile-dropdown";
 
-// This is sample data.
+// This is sample data
 const data = {
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: Command,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
+  user: {
+    name: "John Doe",
+    email: "john@example.com",
+    avatar: "/avatars/default.jpg",
+  },
   navMain: [
     {
       title: "Dashboard",
@@ -57,19 +48,14 @@ const data = {
       icon: Home,
     },
     {
+      title: "Matched Scholarships",
+      url: "/matched-scholarships",
+      icon: Sparkles,
+    },
+    {
       title: "Search",
       url: "/search",
       icon: Search,
-    },
-    {
-      title: "Calendar",
-      url: "/calendar",
-      icon: Calendar,
-    },
-    {
-      title: "Tasks",
-      url: "/tasks",
-      icon: Inbox,
     },
     {
       title: "Documents",
@@ -79,115 +65,86 @@ const data = {
     {
       title: "Profile",
       url: "/profile",
-      icon: User,
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-    },
-    {
-      title: "Templates",
-      url: "#",
-      icon: Blocks,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-    },
-    {
-      title: "Help",
-      url: "#",
-      icon: MessageCircleQuestion,
-    },
-  ],
-  scholarships: [
-    {
-      name: "Merit Scholarship",
-      url: "#",
-      emoji: "🎓",
-    },
-    {
-      name: "STEM Research Grant",
-      url: "#",
-      emoji: "🔬",
-    },
-    {
-      name: "Arts & Humanities Fellowship",
-      url: "#",
-      emoji: "🎨",
-    },
-    {
-      name: "International Student Award",
-      url: "#",
-      emoji: "🌎",
-    },
-    {
-      name: "Community Service Scholarship",
-      url: "#",
-      emoji: "🤝",
-    },
-    {
-      name: "Athletic Excellence Award",
-      url: "#",
-      emoji: "🏆",
-    },
-    {
-      name: "First Generation Scholar",
-      url: "#",
-      emoji: "⭐",
-    },
-    {
-      name: "Women in Leadership Grant",
-      url: "#",
-      emoji: "👩",
-    },
-    {
-      name: "Entrepreneurship Fund",
-      url: "#",
-      emoji: "💡",
+      icon: User2,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  const { setOpen } = useSidebar();
+
+  const activeItem =
+    data.navMain.find((item) => pathname === item.url) || data.navMain[0];
+
   return (
-    <Sidebar className="border-r-0" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="/dashboard">
-                {/* <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <GalleryVerticalEnd className="size-4" />
-                </div> */}
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-extrabold text-[27px] text-gradient">
-                    Scholarmatch
-                  </span>
-                </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        <NavMain items={data.navMain} />
-      </SidebarHeader>
-      {/* <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-        <NavMain items={data.navMain} />
-      </SidebarHeader> */}
-      <SidebarContent>
-        <NavScholarships
-          label="Scholarships"
-          scholarships={data.scholarships}
-        />
-        {/* <NavWorkspaces workspaces={data.workspaces} /> */}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
-      </SidebarContent>
-      <SidebarRail />
+    <Sidebar
+      collapsible="icon"
+      className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
+      {...props}
+    >
+      {/* This is the first sidebar */}
+      {/* We disable collapsible and adjust width to icon. */}
+      {/* This will make the sidebar appear as icons. */}
+      <Sidebar
+        collapsible="none"
+        className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r "
+      >
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
+                <Link href="/dashboard">
+                  <div className="bg-button text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                    <GraduationCap className="size-5" />
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">ScholarMatch</span>
+                    <span className="truncate text-xs">
+                      Your personal scholarship counselor
+                    </span>
+                  </div>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent className="px-1.5 md:px-0">
+              <SidebarMenu>
+                {data.navMain.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      tooltip={{
+                        children: item.title,
+                        hidden: false,
+                      }}
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                      isActive={pathname === item.url}
+                      className="px-2.5 md:px-2"
+                      asChild
+                    >
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter>
+          <ProfileDropdown />
+        </SidebarFooter>
+      </Sidebar>
+
+      {/* This is the second sidebar */}
+      {/* We disable collapsible and let it fill remaining space */}
     </Sidebar>
   );
 }
