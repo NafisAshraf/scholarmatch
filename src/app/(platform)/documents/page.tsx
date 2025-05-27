@@ -201,7 +201,7 @@ function useDocumentUploadMutation() {
   });
 }
 
-const Index = () => {
+export default function DocumentsPage() {
   const [documents, setDocuments] =
     useState<DocumentCategory[]>(initialDocuments);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -379,6 +379,4 @@ const Index = () => {
       </div>
     </div>
   );
-};
-
-export default Index;
+}

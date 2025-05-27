@@ -54,9 +54,9 @@ export default function CVGenerator() {
       </div>
       {/* Right: CV Preview + Download */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between gap-0 bg-gradient px-0 md:px-10 py-10 relative">
-        <div className="w-full flex justify-end pr-3">
+        {/* <div className="w-full flex justify-end pr-3">
           <DownloadCVButton />
-        </div>
+        </div> */}
         <div className="grow w-full flex justify-center items-start">
           <CVPreview data={cvData} template={template} />
         </div>
