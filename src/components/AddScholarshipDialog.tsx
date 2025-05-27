@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, X } from "lucide-react";
-import { Scholarship, Subtask } from "@/app/(platform)/dashboard/page";
+import { Scholarship, Subtask } from "@/types/scholarship";
 
 interface AddScholarshipDialogProps {
   open: boolean;
