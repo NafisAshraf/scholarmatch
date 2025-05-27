@@ -115,12 +115,6 @@ const mapCategoryToJsonbKey = (categoryId: string): DocumentJsonbKey => {
 
 const STORAGE_BUCKET = "user-documents";
 
-export function getPublicUrl(path: string) {
-  const supabase = createClient();
-  const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);
-  return data.publicUrl;
-}
-
 function useUserDocuments() {
   const params = useParams();
   const scholarshipId = params.id as string;

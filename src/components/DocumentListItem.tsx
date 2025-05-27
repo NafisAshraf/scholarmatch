@@ -8,7 +8,7 @@ import {
   Link as LinkIcon,
   Download,
 } from "lucide-react";
-import { getPublicUrl } from "@/app/(platform)/documents/page";
+import { getPublicUrl } from "@/lib/utils";
 
 interface UploadedFile {
   id: string;
