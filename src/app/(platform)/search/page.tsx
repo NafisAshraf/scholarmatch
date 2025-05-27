@@ -50,7 +50,7 @@ export default function SearchPage() {
   return (
     <div className="min-h-screen flex flex-col items-center py-16 bg-gradient">
       <h1 className="text-5xl font-bold text-gradient py-16">
-        Find Your Dream Scholarship
+        Country Specific Scholarships
       </h1>
       <div className="bg-white/90 dark:bg-transparent rounded-lg shadow-lg p-6 flex flex-col w-full max-w-5xl">
         <div className="flex flex-col md:flex-row gap-4 mb-4">
