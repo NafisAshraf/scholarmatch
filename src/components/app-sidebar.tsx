@@ -62,11 +62,11 @@ const data = {
       url: "/documents",
       icon: FileText,
     },
-    {
-      title: "Profile",
-      url: "/profile",
-      icon: User2,
-    },
+    // {
+    //   title: "Profile",
+    //   url: "/profile",
+    //   icon: User2,
+    // },
   ],
 };
 

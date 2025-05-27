@@ -7,7 +7,14 @@ import { BoxIcon, HouseIcon, PanelsTopLeftIcon } from "lucide-react";
 import SopPage from "@/components/sop-page";
 import ScholarshipDetails from "@/components/scholarship-details";
 import CVGenerator from "@/components/cv-generator";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import ScholarshipDocuments from "@/components/scholarship-documents";
+import LorGenerator from "@/components/lor-generator";
+
 const Index = () => {
+  const params = useParams();
+
   const tabs = [
     {
       id: "tab-0",
@@ -19,7 +26,12 @@ const Index = () => {
     {
       id: "tab-3",
       label: "Generate LOR",
-      component: <ProfileDropdown />,
+      component: <LorGenerator />,
+    },
+    {
+      id: "tab-4",
+      label: "Documents",
+      component: <ScholarshipDocuments />,
     },
   ];
 

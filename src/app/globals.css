@@ -151,3 +151,12 @@
     --chart-5: 220 70% 50%;
   }
 }
+
+@layer utilities {
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}

@@ -1,6 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, Info, Trash2, Upload } from "lucide-react";
+import {
+  FileText,
+  Info,
+  Trash2,
+  Upload,
+  Link as LinkIcon,
+  Download,
+} from "lucide-react";
+import { getPublicUrl } from "@/app/(platform)/documents/page";
 
 interface UploadedFile {
   id: string;
@@ -8,6 +16,7 @@ interface UploadedFile {
   size: number;
   type: string;
   uploadDate: Date;
+  path?: string;
 }
 
 interface DocumentCategory {
@@ -71,35 +80,60 @@ const DocumentListItem = ({
         </div>
       </div>
 
-      {category.files.length > 0 && (
+      {category.files.length > 0 ? (
         <div className="mt-4 space-y-2 pl-0 sm:pl-12 max-h-60 overflow-y-auto">
-          {category.files.map((file) => (
-            <div
-              key={file.id}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
-            >
-              <div className="flex items-center space-x-3 flex-1 min-w-0">
-                <FileText className="h-4 w-4 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium truncate">{file.name}</p>
-                  <p className="text-xs">
-                    {formatFileSize(file.size)} • {formatDate(file.uploadDate)}
-                  </p>
+          {category.files.map((file) => {
+            const publicUrl = file.path ? getPublicUrl(file.path) : null;
+            return (
+              <div
+                key={file.id}
+                className="group flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
+              >
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
+                  <FileText className="h-4 w-4 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium truncate flex items-center gap-2">
+                      {file.name}
+                      {publicUrl && (
+                        <a
+                          href={publicUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 text-blue-600 hover:underline flex items-center"
+                          title="View/Download"
+                        >
+                          <LinkIcon className="h-4 w-4" />
+                        </a>
+                      )}
+                    </p>
+                    {/* <p className="text-xs">{formatFileSize(file.size)}</p> */}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {publicUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      // className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => window.open(publicUrl, "_blank")}
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => onDeleteFile(file.id)}
+                    className="flex-shrink-0"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onDeleteFile(file.id)}
-                className="flex-shrink-0"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
-      )}
-      {category.files.length === 0 && (
+      ) : (
         <div className="mt-4 pl-0 sm:pl-12 text-xs text-muted-foreground">
           <span className="flex items-center">
             <Info className="p-1 m-0.5" />

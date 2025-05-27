@@ -32,20 +32,34 @@ export function SignUpForm({
     const supabase = createClient();
     setIsLoading(true);
     setError(null);
-
     try {
-      const { error } = await supabase.auth.signUp({
+      const {
+        data: { user },
+        error: signUpError,
+      } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/protected`,
+          // emailRedirectTo: `${window.location.origin}/matched-scholarships`,
           data: {
             full_name: fullName,
           },
         },
       });
-      if (error) throw error;
-      router.push("/sign-up-success");
+
+      if (signUpError) throw signUpError;
+
+      if (user) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            user_id: user.id,
+          },
+        ]);
+
+        if (profileError) throw profileError;
+      }
+
+      router.push("/matched-scholarships");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {

@@ -2,17 +2,14 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Calendar,
-  CheckCircle2,
-  Circle,
   MoreVertical,
   Trash2,
-  Edit,
-  Plus,
-  ArrowUpRightIcon,
+  ExternalLink,
+  ArrowUpRight,
+  CheckCircle2,
+  Circle,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -20,15 +17,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Scholarship, Subtask } from "@/app/(platform)/dashboard/page";
-import { EditScholarshipDialog } from "@/components/EditScholarshipDialog";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+export interface DBScholarship {
+  id: string;
+  title: string;
+  amount: string;
+  status: "matched" | "added";
+  country: string;
+  subject: string;
+  deadline: string;
+  documents: {
+    cv: any[];
+    lor: any[];
+    sop: any[];
+    others: any[];
+    english: any[];
+    transcript: any[];
+  };
+  source_url: string;
+  university: string;
+  description: string;
+  degree_level: string;
+  matching_score: number;
+  application_url: string;
+  eligibility_criteria: string[];
+  eligible_nationality: string;
+  application_procedure: string[];
+  completed?: boolean; // Optional field for tracking completion status
+}
 
 interface ScholarshipCardProps {
-  scholarship: Scholarship;
-  onUpdate: (updates: Partial<Scholarship>) => void;
-  onDelete: () => void;
-  onToggleSubtask: (subtaskId: string) => void;
+  scholarship: DBScholarship;
+  onRemove: (scholarship: DBScholarship) => void;
+  onToggleCompletion?: (scholarship: DBScholarship) => void;
   getDeadlineStatus: (deadline: string) => {
     status: string;
     color: "destructive" | "secondary" | "outline";
@@ -38,21 +61,11 @@ interface ScholarshipCardProps {
 
 export function ScholarshipCard({
   scholarship,
-  onUpdate,
-  onDelete,
-  onToggleSubtask,
+  onRemove,
+  onToggleCompletion,
   getDeadlineStatus,
 }: ScholarshipCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-
-  const completedSubtasks = scholarship.subtasks.filter(
-    (st) => st.completed
-  ).length;
-  const totalSubtasks = scholarship.subtasks.length;
-  const progress =
-    totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
-
+  const router = useRouter();
   const deadlineInfo = getDeadlineStatus(scholarship.deadline);
   const formattedDeadline = new Date(scholarship.deadline).toLocaleDateString(
     "en-US",
@@ -63,146 +76,139 @@ export function ScholarshipCard({
     }
   );
 
-  return (
-    <>
-      <Card
-        className={` ${
-          scholarship.completed ? "bg-green-50/80 dark:bg-green-900/20" : ""
-        } backdrop-blur-sm`}
-      >
-        <CardHeader className="pb-4">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h3
-                  className={`text-lg font-bold transition-colors ${
-                    scholarship.completed
-                      ? "text-green-700 dark:text-green-300 line-through"
-                      : "text-gray-900 dark:text-white"
-                  }`}
-                >
-                  {scholarship.title}
-                </h3>
-                {scholarship.completed && (
-                  <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
-                )}
-              </div>
+  const handleApply = () => {
+    //go to /dashboard/scholarship/:id
+    router.push(`/dashboard/${scholarship.id}`);
+    // if (scholarship.application_url) {
+    //   window.open(scholarship.application_url, "_blank");
+    // }
+  };
 
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-gray-500" />
-                  <span className="text-gray-600 dark:text-gray-300">
-                    {formattedDeadline}
-                  </span>
-                  <Badge variant={deadlineInfo.color} className="text-xs">
-                    {deadlineInfo.text}
-                  </Badge>
-                </div>
+  return (
+    <Card
+      className={`backdrop-blur-sm hover:shadow-lg transition-shadow ${
+        scholarship.completed ? "bg-green-50/80 dark:bg-green-900/20" : ""
+      }`}
+    >
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-2">
+              <h3
+                className={`text-lg font-bold truncate ${
+                  scholarship.completed
+                    ? "text-green-700 dark:text-green-300 line-through"
+                    : "text-gray-900 dark:text-white"
+                }`}
+              >
+                {scholarship.title}
+              </h3>
+              {scholarship.completed && (
+                <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+              )}
+            </div>
+
+            <div className="flex items-center gap-4 text-sm mb-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-gray-500" />
+                <span className="text-gray-600 dark:text-gray-300">
+                  {formattedDeadline}
+                </span>
+                <Badge variant={deadlineInfo.color} className="text-xs">
+                  {deadlineInfo.text}
+                </Badge>
               </div>
             </div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
-              >
-                <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={onDelete}
-                  className="text-red-600 dark:text-red-400"
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+              <span>{scholarship.university}</span>
+              <span>•</span>
+              <span>{scholarship.country}</span>
+              <span>•</span>
+              <span>{scholarship.amount}</span>
+            </div>
           </div>
 
-          {totalSubtasks > 0 && (
-            <div className="space-y-2 pt-5 px-5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600 dark:text-gray-300">
-                  Progress: {completedSubtasks}/{totalSubtasks} tasks
-                </span>
-                <span className="text-gray-600 dark:text-gray-300">
-                  {Math.round(progress)}%
-                </span>
-              </div>
-              <Progress value={progress} className="h-2" />
-            </div>
-          )}
-        </CardHeader>
-
-        {totalSubtasks > 0 && (
-          <CardContent className="pt-0">
-            <div className="flex items-center justify-between">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="justify-start text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                size="icon"
+                className="h-8 w-8 flex-shrink-0"
               >
-                {isExpanded ? "Hide" : "Show"} Tasks ({totalSubtasks})
+                <MoreVertical className="h-4 w-4" />
               </Button>
-              <Link href="/dashboard/1">
-                <Button variant="gradient">
-                  <ArrowUpRightIcon className="h-4 w-4" />
-                  Apply Now
-                </Button>
-              </Link>
-            </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            >
+              <DropdownMenuItem
+                onClick={() => window.open(scholarship.source_url, "_blank")}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                View Details
+              </DropdownMenuItem>
+              {onToggleCompletion && (
+                <DropdownMenuItem
+                  onClick={() => onToggleCompletion(scholarship)}
+                >
+                  {scholarship.completed ? (
+                    <>
+                      <Circle className="h-4 w-4 mr-2" />
+                      Mark as In Progress
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
+                      Mark as Completed
+                    </>
+                  )}
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem
+                onClick={() => onRemove(scholarship)}
+                className="text-red-600 dark:text-red-400"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Remove
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </CardHeader>
 
-            {isExpanded && (
-              <div className="mt-4 space-y-3">
-                {scholarship.subtasks.map((subtask) => (
-                  <div
-                    key={subtask.id}
-                    className="flex items-start gap-3 p-3 rounded-lg  hover:bg-gray-100/80 dark:hover:bg-gray-700/80 transition-colors"
-                  >
-                    <Checkbox
-                      checked={subtask.completed}
-                      onCheckedChange={() => onToggleSubtask(subtask.id)}
-                      className="mt-0.5"
-                    />
-                    <span
-                      className={`flex-1 text-sm ${
-                        subtask.completed
-                          ? "line-through text-gray-500 dark:text-gray-400"
-                          : "text-gray-700 dark:text-gray-200"
-                      }`}
-                    >
-                      {subtask.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
+      <CardContent className="pt-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs">
+              {scholarship.degree_level}
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              {scholarship.subject}
+            </Badge>
+            {scholarship.matching_score && (
+              <Badge variant="secondary" className="text-xs">
+                {scholarship.matching_score}% match
+              </Badge>
             )}
-          </CardContent>
-        )}
+          </div>
 
-        {totalSubtasks === 0 && (
-          <CardContent className="pt-0">
-            <div className="text-center py-4 text-gray-500 dark:text-gray-400">
-              <Circle className="h-8 w-8 mx-auto mb-2 opacity-50" />
-              <p className="text-sm">No application steps added yet</p>
-            </div>
-          </CardContent>
-        )}
-      </Card>
+          <Button
+            variant="gradient"
+            onClick={handleApply}
+            disabled={!scholarship.application_url}
+            className="flex items-center gap-2"
+          >
+            <ArrowUpRight className="h-4 w-4" />
+            Apply
+          </Button>
+        </div>
 
-      <EditScholarshipDialog
-        open={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        scholarship={scholarship}
-        onUpdate={onUpdate}
-      />
-    </>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-3 line-clamp-2">
+          {scholarship.description}
+        </p>
+      </CardContent>
+    </Card>
   );
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CVForm, { CVData } from "@/components/cv-form";
 import TemplateSelector from "@/components/template-selector";
 import CVPreview from "@/components/cv-preview";
-// import DownloadCVButton from "@/components/DownloadCVButton";
+import DownloadCVButton from "@/components/download-cv-button";
 
 const defaultCV: CVData = {
   name: "Jane Doe",
@@ -55,7 +55,7 @@ export default function CVGenerator() {
       {/* Right: CV Preview + Download */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-between gap-0 bg-gradient px-0 md:px-10 py-10 relative">
         <div className="w-full flex justify-end pr-3">
-          {/* <DownloadCVButton /> */}
+          <DownloadCVButton />
         </div>
         <div className="grow w-full flex justify-center items-start">
           <CVPreview data={cvData} template={template} />

@@ -24,7 +24,6 @@ export function useJSONScholarships() {
     },
   });
 }
-
 export function useAddJSONScholarship() {
   const queryClient = useQueryClient();
   return useMutation<any, Error, any>({
@@ -46,13 +45,33 @@ export function useAddJSONScholarship() {
       if (error) throw new Error(error.message);
       let scholarships: any[] = data?.scholarships || [];
 
-      scholarships[scholarship.id] = {
-        ...scholarship,
-        status: "added",
+      // Find and update existing scholarship or add new one
+      const existingIndex = scholarships.findIndex(
+        (s) => s.id === scholarship.id
+      );
+
+      const defaultDocuments = {
+        cv: [],
+        lor: [],
+        sop: [],
+        others: [],
+        english: [],
+        transcript: [],
       };
-      console.log(scholarships);
-      console.log(scholarship.id);
-      console.log(scholarship);
+
+      if (existingIndex !== -1) {
+        scholarships[existingIndex] = {
+          ...scholarship,
+          status: "added",
+          documents: scholarship.documents || defaultDocuments,
+        };
+      } else {
+        scholarships.push({
+          ...scholarship,
+          status: "added",
+          documents: scholarship.documents || defaultDocuments,
+        });
+      }
 
       // Update scholarships in DB
       const { error: updateError } = await supabase
@@ -89,20 +108,24 @@ export function useRemoveJSONScholarship() {
       if (error) throw new Error(error.message);
       let scholarships: any[] = data?.scholarships || [];
 
-      // // Check if scholarship with same title exists
-      // const idx = scholarships.findIndex(
-      //   (s: any) => s.title === scholarship.title
-      // );
-      // if (idx !== -1) {
-      //   scholarships[idx] = { ...scholarship, status: "matched" };
-      // }
-      scholarships[scholarship.id] = {
-        ...scholarship,
-        status: "matched",
-      };
-      console.log(scholarships);
-      console.log(scholarship.id);
-      console.log(scholarship);
+      // Find and update existing scholarship
+      const existingIndex = scholarships.findIndex(
+        (s) => s.id === scholarship.id
+      );
+      if (existingIndex !== -1) {
+        scholarships[existingIndex] = {
+          ...scholarship,
+          status: "matched",
+          documents: scholarship.documents || {
+            cv: [],
+            lor: [],
+            sop: [],
+            others: [],
+            english: [],
+            transcript: [],
+          },
+        };
+      }
 
       // Update scholarships in DB
       const { error: updateError } = await supabase

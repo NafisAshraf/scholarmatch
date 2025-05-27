@@ -49,6 +49,7 @@ export default function Page() {
                 country={scholarship.country}
                 subject={scholarship.subject}
                 deadline={scholarship.deadline}
+                documents={scholarship.documents}
                 source_url={scholarship.source_url}
                 university={scholarship.university}
                 description={scholarship.description}

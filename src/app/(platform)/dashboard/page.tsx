@@ -4,129 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Moon, Sun, CheckCircle2, Circle, Trash2 } from "lucide-react";
-import { AddScholarshipDialog } from "@/components/AddScholarshipDialog";
-import { ScholarshipCard } from "@/components/ScholarshipCard";
+import { ScholarshipCard, DBScholarship } from "@/components/ScholarshipCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTheme } from "next-themes";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
-
-export interface Subtask {
-  id: string;
-  title: string;
-  completed: boolean;
-}
-
-export interface Scholarship {
-  id: string;
-  title: string;
-  deadline: string;
-  subtasks: Subtask[];
-  completed: boolean;
-}
-
-const DEFAULT_SCHOLARSHIPS: Scholarship[] = [
-  {
-    id: "1",
-    title: "Google Scholarship Program",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 10); // 10 days from now
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "1a", title: "Upload CV", completed: false },
-      { id: "1b", title: "Write SOP (2 pages)", completed: false },
-      { id: "1c", title: "Request 2 recommendation letters", completed: false },
-    ],
-  },
-  {
-    id: "2",
-    title: "Microsoft Diversity Scholarship",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 3); // 3 days from now
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "2a", title: "Fill online application", completed: false },
-      {
-        id: "2b",
-        title: "Email project portfolio to ms-apps@microsoft.com",
-        completed: false,
-      },
-      { id: "2c", title: "Complete diversity essay", completed: false },
-    ],
-  },
-  {
-    id: "3",
-    title: "MIT International Scholars Grant",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 20); // 20 days from now
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "3a", title: "Find faculty recommender", completed: false },
-      { id: "3b", title: "Upload transcripts", completed: false },
-      { id: "3c", title: "Write statement of purpose", completed: false },
-    ],
-  },
-  {
-    id: "4",
-    title: "Women in STEM Award",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 14);
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "4a", title: "Submit official transcripts", completed: false },
-      { id: "4b", title: "Write STEM background essay", completed: false },
-      { id: "4c", title: "Provide proof of enrollment", completed: false },
-    ],
-  },
-  {
-    id: "5",
-    title: "International Cultural Exchange Fund",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 6);
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "5a", title: "Proof of language proficiency", completed: false },
-      { id: "5b", title: "Submit program proposal", completed: false },
-    ],
-  },
-  {
-    id: "6",
-    title: "Artistic Excellence Fellowship",
-    deadline: (() => {
-      const d = new Date();
-      d.setDate(d.getDate() + 1);
-      return d.toISOString().slice(0, 10);
-    })(),
-    completed: false,
-    subtasks: [
-      { id: "6a", title: "Portfolio submission", completed: false },
-      { id: "6b", title: "Write artist statement", completed: false },
-      { id: "6c", title: "Letter of recommendation", completed: false },
-    ],
-  },
-];
+import {
+  useJSONScholarships,
+  useRemoveJSONScholarship,
+} from "@/hooks/useJSONscholarships";
 
 const Index = () => {
-  const [scholarships, setScholarships] = useState<Scholarship[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [tab, setTab] = useState<"all" | "progress" | "completed">("all");
   const { theme, setTheme } = useTheme();
+
+  // Use the hooks for data fetching and mutations
+  const { data: scholarships = [], isLoading, error } = useJSONScholarships();
+  const removeScholarshipMutation = useRemoveJSONScholarship();
 
   // Load theme preference
   useEffect(() => {
@@ -139,21 +34,6 @@ const Index = () => {
     document.documentElement.classList.toggle("dark", shouldBeDark);
   }, []);
 
-  // Load scholarships from localStorage or default
-  useEffect(() => {
-    // const saved = localStorage.getItem("scholarships");
-    // if (saved) {
-    //   setScholarships(JSON.parse(saved));
-    // } else {
-    setScholarships(DEFAULT_SCHOLARSHIPS);
-    // }
-  }, []);
-
-  // Save scholarships to localStorage
-  useEffect(() => {
-    localStorage.setItem("scholarships", JSON.stringify(scholarships));
-  }, [scholarships]);
-
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -162,52 +42,19 @@ const Index = () => {
     localStorage.setItem("theme", newMode ? "dark" : "light");
   };
 
-  const addScholarship = (
-    scholarship: Omit<Scholarship, "id" | "completed">
-  ) => {
-    const newScholarship: Scholarship = {
+  const handleRemoveScholarship = (scholarship: DBScholarship) => {
+    removeScholarshipMutation.mutate(scholarship);
+  };
+
+  const handleToggleCompletion = (scholarship: DBScholarship) => {
+    // For now, we'll just update the local state
+    // In a real app, you'd want to persist this to the database
+    const updatedScholarship = {
       ...scholarship,
-      id: Date.now().toString(),
-      completed: false,
+      completed: !scholarship.completed,
     };
-    setScholarships((prev) => [newScholarship, ...prev]);
-  };
-
-  const updateScholarship = (id: string, updates: Partial<Scholarship>) => {
-    setScholarships((prev) =>
-      prev.map((scholarship) =>
-        scholarship.id === id ? { ...scholarship, ...updates } : scholarship
-      )
-    );
-  };
-
-  const deleteScholarship = (id: string) => {
-    setScholarships((prev) =>
-      prev.filter((scholarship) => scholarship.id !== id)
-    );
-  };
-
-  const toggleSubtask = (scholarshipId: string, subtaskId: string) => {
-    setScholarships((prev) =>
-      prev.map((scholarship) => {
-        if (scholarship.id === scholarshipId) {
-          const updatedSubtasks = scholarship.subtasks.map((subtask) =>
-            subtask.id === subtaskId
-              ? { ...subtask, completed: !subtask.completed }
-              : subtask
-          );
-          const allCompleted = updatedSubtasks.every(
-            (subtask) => subtask.completed
-          );
-          return {
-            ...scholarship,
-            subtasks: updatedSubtasks,
-            completed: allCompleted && updatedSubtasks.length > 0,
-          };
-        }
-        return scholarship;
-      })
-    );
+    // You would call a mutation here to update the database
+    console.log("Toggle completion for:", updatedScholarship);
   };
 
   const getDeadlineStatus = (deadline: string) => {
@@ -241,21 +88,60 @@ const Index = () => {
     };
   };
 
-  const completedCount = scholarships.filter((s) => s.completed).length;
-  const totalCount = scholarships.length;
+  // Only show scholarships with "added" status in dashboard
+  const addedScholarships = scholarships.filter(
+    (s: DBScholarship) => s.status === "added"
+  );
+  const completedCount = addedScholarships.filter(
+    (s: DBScholarship) => s.completed
+  ).length;
+  const progressCount = addedScholarships.filter(
+    (s: DBScholarship) => !s.completed
+  ).length;
+  const totalCount = addedScholarships.length;
 
   const filteredScholarships = (() => {
-    if (tab === "completed") return scholarships.filter((s) => s.completed);
-    if (tab === "progress") return scholarships.filter((s) => !s.completed);
-    return scholarships;
+    if (tab === "completed")
+      return addedScholarships.filter((s: DBScholarship) => s.completed);
+    if (tab === "progress")
+      return addedScholarships.filter((s: DBScholarship) => !s.completed);
+    return addedScholarships;
   })();
 
-  // Sort scholarships by deadline (upcoming, not completed)
-  const upcomingScholarships = scholarships
-    .filter((s) => !s.completed && new Date(s.deadline) >= new Date())
+  // Sort scholarships by deadline (upcoming first) - only show added scholarships
+  const upcomingScholarships = addedScholarships
+    .filter((s: DBScholarship) => new Date(s.deadline) >= new Date())
     .sort(
-      (a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      (a: DBScholarship, b: DBScholarship) =>
+        new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+    )
+    .slice(0, 5); // Show only top 5 upcoming
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">
+            Loading scholarships...
+          </p>
+        </div>
+      </div>
     );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 dark:text-red-400 mb-4">
+            Error loading scholarships
+          </p>
+          <p className="text-gray-600 dark:text-gray-300">{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient">
@@ -267,16 +153,6 @@ const Index = () => {
             <p className="text-gray-800 dark:text-gray-300 mt-2">
               Manage your scholarship applications with ease
             </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button
-              variant={"gradient"}
-              onClick={() => setIsAddDialogOpen(true)}
-              className=""
-            >
-              <Plus className="h-4 w-4" />
-              Add Scholarship
-            </Button>
           </div>
         </div>
 
@@ -302,7 +178,7 @@ const Index = () => {
                 </p>
               ) : (
                 <ul className="space-y-3">
-                  {upcomingScholarships.map((scholarship) => (
+                  {upcomingScholarships.map((scholarship: DBScholarship) => (
                     <li
                       key={scholarship.id}
                       className="flex items-center justify-between p-2 rounded hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition"
@@ -348,7 +224,7 @@ const Index = () => {
                     </div>
                     <div>
                       <p className=" text-gray-600 dark:text-gray-300">
-                        All Applications
+                        All Scholarships
                       </p>
                       <p className="text-3xl font-bold text-gray-900 dark:text-white">
                         {totalCount}
@@ -405,7 +281,7 @@ const Index = () => {
                         In Progress
                       </p>
                       <p className="text-3xl font-bold text-gray-900 dark:text-white">
-                        {totalCount - completedCount}
+                        {progressCount}
                       </p>
                     </div>
                   </div>
@@ -422,49 +298,31 @@ const Index = () => {
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                     {tab === "completed"
-                      ? "No completed tasks"
+                      ? "No completed scholarships"
                       : tab === "progress"
-                      ? "No in-progress tasks"
-                      : "No tasks yet"}
+                      ? "No scholarships in progress"
+                      : "No scholarships yet"}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
                     {tab === "all"
-                      ? "Start tracking your tasks by adding your first one"
+                      ? "Start by exploring scholarships that match your profile"
                       : "Nothing to see here yet!"}
                   </p>
-                  <Button
-                    onClick={() => setIsAddDialogOpen(true)}
-                    className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Task
-                  </Button>
                 </CardContent>
               </Card>
             ) : (
               <div className="grid gap-6">
-                {filteredScholarships.map((scholarship) => (
+                {filteredScholarships.map((scholarship: DBScholarship) => (
                   <ScholarshipCard
                     key={scholarship.id}
                     scholarship={scholarship}
-                    onUpdate={(updates) =>
-                      updateScholarship(scholarship.id, updates)
-                    }
-                    onDelete={() => deleteScholarship(scholarship.id)}
-                    onToggleSubtask={(subtaskId) =>
-                      toggleSubtask(scholarship.id, subtaskId)
-                    }
+                    onRemove={handleRemoveScholarship}
+                    onToggleCompletion={handleToggleCompletion}
                     getDeadlineStatus={getDeadlineStatus}
                   />
                 ))}
               </div>
             )}
-
-            <AddScholarshipDialog
-              open={isAddDialogOpen}
-              onOpenChange={setIsAddDialogOpen}
-              onAdd={addScholarship}
-            />
           </div>
         </div>
       </div>

@@ -25,6 +25,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useAddJSONScholarship } from "@/hooks/useJSONscholarships";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface ScholarshipCardProps {
   id: number;
@@ -34,6 +35,7 @@ interface ScholarshipCardProps {
   country: string;
   subject: string;
   deadline: string;
+  documents: JSON;
   source_url: string;
   university: string;
   description: string;
@@ -80,6 +82,7 @@ export function ScholarshipCard({
   country,
   subject,
   deadline,
+  documents,
   source_url,
   university,
   description,
@@ -116,7 +119,21 @@ export function ScholarshipCard({
         application_procedure,
       },
       {
-        onSuccess: () => setAdded(true),
+        onSuccess: () => {
+          setAdded(true);
+          toast.success("Scholarship Added", {
+            description: (
+              <div className="flex flex-col gap-2">
+                <p>The scholarship has been added to your dashboard.</p>
+                <Link href="/dashboard">
+                  <Button variant="outline" size="sm" className="ms-auto">
+                    Visit Dashboard
+                  </Button>
+                </Link>
+              </div>
+            ),
+          });
+        },
       }
     );
   };

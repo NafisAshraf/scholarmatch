@@ -21,12 +21,14 @@ interface DocumentUploadProps {
   category: DocumentCategory;
   onClose: () => void;
   onUpload: (files: File[]) => void;
+  loading?: boolean;
 }
 
 const DocumentUpload = ({
   category,
   onClose,
   onUpload,
+  loading = false,
 }: DocumentUploadProps) => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState(false);
@@ -52,6 +54,7 @@ const DocumentUpload = ({
     if (selectedFiles.length > 0) {
       onUpload(selectedFiles);
       setSelectedFiles([]);
+      onClose();
     }
   };
 
@@ -153,9 +156,30 @@ const DocumentUpload = ({
             </Button>
             <Button
               onClick={handleUpload}
-              disabled={selectedFiles.length === 0}
-              className="bg-blue-600 hover:bg-blue-700"
+              disabled={selectedFiles.length === 0 || loading}
+              className="bg-blue-600 hover:bg-blue-700 flex items-center"
             >
+              {loading && (
+                <svg
+                  className="animate-spin h-4 w-4 mr-2 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              )}
               Upload {selectedFiles.length > 0 && `(${selectedFiles.length})`}
             </Button>
           </div>

@@ -39,42 +39,28 @@ const SopPage = () => {
     setIsGenerating(true);
 
     try {
-      await fetch(WEBHOOK_URL, {
+      const response = await fetch("/api/generate_sop", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        mode: "no-cors",
         body: JSON.stringify({
-          action: "generate_sop",
-          prompt: prompt,
-          timestamp: new Date().toISOString(),
+          message: "Write my Statement of Purpose.",
+          user_profile: prompt,
         }),
       });
 
-      // Since we're using no-cors, we'll simulate a response after a delay
-      setTimeout(() => {
-        // This is a mock generated content
-        const mockGeneratedContent = `Dear Scholarship Committee,
+      if (!response.ok) {
+        throw new Error("Failed to generate SOP");
+      }
 
-I am writing to express my sincere interest in the [Scholarship Name] as I believe it aligns perfectly with my academic goals and personal journey. Throughout my academic career, I have maintained a strong focus on [Field of Study] while actively engaging in extracurricular activities that demonstrate my leadership abilities and commitment to community service.
+      const data = await response.json();
+      setGeneratedContent(data.sop || "");
+      setIsGenerating(false);
 
-My passion for [Subject] began when [personal anecdote about your interest in the field]. This experience shaped my desire to pursue further education in this area and contribute meaningfully to advancements in the field. During my studies at [University/School], I have maintained a [GPA] while participating in [relevant projects or research].
-
-I am particularly drawn to this scholarship because [reasons specific to this scholarship]. The values of [scholarship values] resonate deeply with my own personal philosophy of [your matching values]. If granted this opportunity, I would use it to [specific plans for using the scholarship].
-
-Thank you for considering my application. I am excited about the possibility of becoming a part of your esteemed scholarship program and would be honored to represent the values it embodies.
-
-Sincerely,
-[Your Name]`;
-
-        setGeneratedContent(mockGeneratedContent);
-        setIsGenerating(false);
-
-        toast.success("Content Generated", {
-          description: "Your SOP draft has been generated.",
-        });
-      }, 3000);
+      toast.success("Content Generated", {
+        description: "Your SOP draft has been generated.",
+      });
     } catch (error) {
       console.error("Error generating content:", error);
       setIsGenerating(false);
@@ -183,9 +169,9 @@ Sincerely,
                   </CardContent>
                   {generatedContent && (
                     <CardFooter className="justify-end">
-                      <Button variant="outline" className="mr-2">
+                      {/* <Button variant="outline" className="mr-2">
                         Copy
-                      </Button>
+                      </Button> */}
                       <Button>
                         <Send className="mr-2 h-4 w-4" />
                         Export

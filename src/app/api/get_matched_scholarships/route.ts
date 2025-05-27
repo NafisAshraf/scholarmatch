@@ -117,14 +117,22 @@ export async function POST(req: Request) {
       (scholarship: any) => ({
         ...scholarship,
         status: "matched",
+        documents: {
+          cv: [],
+          lor: [],
+          sop: [],
+          others: [],
+          english: [],
+          transcript: [],
+        },
       })
     );
 
-    // Add IDs to scholarships and update user's profile
+    // Add UUIDs to scholarships and update user's profile
     const scholarshipsWithIds = scholarshipsWithStatus.map(
-      (scholarship: any, index: number) => ({
+      (scholarship: any) => ({
         ...scholarship,
-        id: index,
+        id: crypto.randomUUID(),
       })
     );
 

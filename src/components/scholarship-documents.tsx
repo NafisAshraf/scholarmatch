@@ -2,17 +2,10 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import {
-  Upload,
   FileText,
   GraduationCap,
-  Award,
   User,
   Globe,
-  Calculator,
-  CreditCard,
-  Heart,
-  Moon,
-  Sun,
   LayoutGrid,
   List,
 } from "lucide-react";
@@ -24,6 +17,7 @@ import DocumentCard from "@/components/DocumentCard";
 import DocumentListItem from "@/components/DocumentListItem";
 import { createClient } from "@/lib/supabase/client";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 interface UploadedFile {
   id: string;
@@ -128,6 +122,8 @@ export function getPublicUrl(path: string) {
 }
 
 function useUserDocuments() {
+  const params = useParams();
+  const scholarshipId = params.id as string;
   return useQuery({
     queryKey: ["user-documents-profile"],
     queryFn: async () => {
@@ -138,11 +134,14 @@ function useUserDocuments() {
       if (!user) throw new Error("Not authenticated");
       const { data, error } = await supabase
         .from("profiles")
-        .select("documents")
+        .select("scholarships")
         .eq("user_id", user.id)
         .single();
       if (error) throw new Error(error.message);
-      return data.documents;
+      const scholarship = data.scholarships.find(
+        (s: any) => s.id === scholarshipId
+      );
+      return scholarship.documents;
     },
   });
 }
@@ -153,9 +152,11 @@ function useDocumentUploadMutation() {
     mutationFn: async ({
       categoryId,
       files,
+      scholarshipId,
     }: {
       categoryId: string;
       files: File[];
+      scholarshipId?: string;
     }) => {
       const supabase = createClient();
       // Get user
@@ -167,10 +168,11 @@ function useDocumentUploadMutation() {
       // Get current documents JSONB
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
-        .select("documents")
+        .select("documents, scholarships")
         .eq("user_id", user.id)
         .single();
       if (profileError) throw new Error(profileError.message);
+      console.log(profile);
 
       // Upload each file
       const uploadedPaths: string[] = [];
@@ -194,6 +196,25 @@ function useDocumentUploadMutation() {
         .update({ documents: profile.documents })
         .eq("user_id", user.id);
       if (updateError) throw new Error(updateError.message);
+
+      if (scholarshipId) {
+        let scholarships = profile.scholarships || [];
+        console.log("scholarships", scholarships);
+        const idx = scholarships.findIndex((s: any) => s.id === scholarshipId);
+        if (idx !== -1) {
+          scholarships[idx].documents[key] = [
+            ...(scholarships[idx].documents[key] || []),
+            ...uploadedPaths,
+          ];
+          console.log("scholarships after update", scholarships);
+          const { error: updateError } = await supabase
+            .from("profiles")
+            .update({ scholarships: scholarships })
+            .eq("user_id", user.id);
+          if (updateError) throw new Error(updateError.message);
+        }
+      }
+
       // Optionally, refetch profile/documents queries
       queryClient.invalidateQueries();
       return uploadedPaths;
@@ -201,7 +222,9 @@ function useDocumentUploadMutation() {
   });
 }
 
-const Index = () => {
+const ScholarshipDocuments = () => {
+  const params = useParams();
+  const scholarshipId = params.id as string;
   const [documents, setDocuments] =
     useState<DocumentCategory[]>(initialDocuments);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -369,6 +392,7 @@ const Index = () => {
             onUpload={async (filesToUpload) => {
               await uploadMutation.mutateAsync({
                 categoryId: selectedCategory,
+                scholarshipId: scholarshipId,
                 files: filesToUpload,
               });
               // Optionally update local state/UI here if needed
@@ -381,4 +405,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default ScholarshipDocuments;

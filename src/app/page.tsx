@@ -1,103 +1,336 @@
-import Image from "next/image";
+import {
+  ChevronRight,
+  ClipboardEdit,
+  LayoutDashboard,
+  ListChecks,
+  CalendarCheck,
+  UploadCloud,
+  Send,
+  Users,
+  MessageSquareText,
+  Goal,
+  UsersRound,
+  BrainCircuit,
+} from "lucide-react";
+import React from "react";
 
-export default function Home() {
+const Index = () => {
+  const teamMembers = [
+    {
+      name: "Nafis",
+      role: "Tech Lead",
+      description: "Architecting the technology that powers our platform.",
+      icon: <BrainCircuit className="w-8 h-8 text-cyan-500" />,
+    },
+    {
+      name: "Pradeepta",
+      role: "CEO",
+      description: "Visionary leader driving ScholarMatch AI's mission.",
+      icon: <Goal className="w-8 h-8 text-cyan-500" />,
+    },
+    {
+      name: "Aria",
+      role: "Marketing Lead",
+      description: "Connecting students with ScholarMatch AI's opportunities.",
+      icon: <UsersRound className="w-8 h-8 text-cyan-500" />,
+    },
+  ];
+
+  const userJourneySteps = [
+    {
+      id: 1,
+      title: "Profile Creation",
+      description:
+        "Sign up and tell us about your academic background, interests, and preferences. This helps us find scholarships tailored for you.",
+      icon: <ClipboardEdit className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 2,
+      title: "Personalized Scholarship Dashboard",
+      description:
+        "Access a dashboard showing matched scholarships, sorted by relevance and deadline. Save your preferred ones.",
+      icon: <LayoutDashboard className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 3,
+      title: "Select & Apply",
+      description:
+        "Choose scholarships and activate the Application Tracker. We'll guide you through each step.",
+      icon: <ListChecks className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 4,
+      title: "Calendar & To-Do Checklist",
+      description:
+        "Get an auto-generated calendar with deadlines and a to-do list for all required documents (transcripts, SOP, LORs, etc.).",
+      icon: <CalendarCheck className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 5,
+      title: "Document Upload & Progress Tracking",
+      description:
+        "Upload files directly, mark tasks as done, and watch your application progress. Receive reminders for pending items.",
+      icon: <UploadCloud className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 6,
+      title: "Final Review & Submission Support",
+      description:
+        "Our system checks for completeness. We offer guidance for submission and provide tools to package your application.",
+      icon: <Send className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+    {
+      id: 7,
+      title: "Mentoring & Guidance",
+      description:
+        "Post-submission, access mentorship sessions for interview prep, follow-up strategies, and connect with our community.",
+      icon: <MessageSquareText className="w-10 h-10 mb-4 text-blue-500" />,
+    },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="font-inter bg-slate-50 text-slate-800 min-h-screen">
+      {/* Header/Nav - Removed */}
+      <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <a href="#" className="text-2xl font-bold text-cyan-600">
+                ScholarMatch
+              </a>
+            </div>
+            <div className="hidden md:flex items-center space-x-8">
+              <a
+                href="#mission"
+                className="text-slate-600 hover:text-cyan-600 transition-colors"
+              >
+                Mission
+              </a>
+              <a
+                href="#how-it-works"
+                className="text-slate-600 hover:text-cyan-600 transition-colors"
+              >
+                How It Works
+              </a>
+              <a
+                href="#team"
+                className="text-slate-600 hover:text-cyan-600 transition-colors"
+              >
+                Team
+              </a>
+              <a
+                href="#cta"
+                className="text-slate-600 hover:text-cyan-600 transition-colors"
+              >
+                Get Started
+              </a>
+            </div>
+            <div className="flex items-center space-x-4">
+              <a
+                href="/login"
+                className="px-4 py-2 text-cyan-600 font-medium rounded-lg hover:bg-cyan-50 transition-colors"
+              >
+                Login
+              </a>
+              <a
+                href="/signup"
+                className="px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition-all duration-300"
+              >
+                Sign Up
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+      {/* Hero Section - Updated to match the image reference */}
+      <section className="pb-20 pt-40 px-40 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center">
+            <div className="md:w-1/2 md:pr-12 px-4">
+              <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+                ScholarMatch.
+                <span className="text-gradient">AI</span>
+              </h1>
+              <h2 className="text-xl sm:text-2xl font-medium text-cyan-700 mb-6">
+                Personalized Scholarship Pathways.
+              </h2>
+              <p className="text-lg text-slate-700 mb-6">
+                ScholarMatch AI creates a unified and accessible platform where
+                every student can tell their unique story, seamlessly manage
+                their application journey, and get a fair shot at scholarships
+                that match their potential.
+              </p>
+              <p className="text-lg italic text-slate-600 mb-8 px-4 me-4">
+                "To empower{" "}
+                <span className="text-gradient font-bold">48,000</span> students
+                each year by 2027 with the tools to find, apply for, and win
+                scholarships."
+              </p>
+              <div className="flex flex-wrap items-center justify-center me-25 pt-5">
+                <a
+                  href="/login"
+                  className="px-8 py-4 text-white font-bold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-xl"
+                >
+                  Get Started
+                </a>
+              </div>
+            </div>
+            <div className="md:w-1/2 mt-12 md:mt-0">
+              <img
+                src="/image.png"
+                alt="ScholarMatch AI Platform"
+                className="w-full h-auto rounded-xl shadow-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission Section */}
+      <section id="mission" className="py-16 md:py-24 px-30 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-sm font-semibold uppercase text-cyan-600 tracking-wider mb-2">
+            Our Commitment
+          </h3>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+            Empowering Students, Achieving Dreams
+          </h2>
+          <p className="text-xl text-slate-700 max-w-3xl mx-auto mb-12">
+            "To empower{" "}
+            <strong className="text-blue-600">48,000 students</strong> each year
+            by <strong className="text-blue-600">2027</strong> with the tools to
+            find, apply for, and win scholarships."
+          </p>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="text-left p-6 bg-slate-100 rounded-xl shadow-lg">
+              <Goal className="w-12 h-12 text-cyan-500 mb-4" />
+              <h4 className="text-2xl font-semibold text-slate-800 mb-2">
+                Our Vision
+              </h4>
+              <p className="text-slate-600">
+                To create a unified and accessible platform where every student,
+                regardless of background, can tell their unique story,
+                seamlessly manage their application journey, and get a fair shot
+                at scholarships that match their potential.
+              </p>
+            </div>
+            <div className="text-left p-6 bg-slate-100 rounded-xl shadow-lg h-full">
+              <Users className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-2xl font-semibold text-slate-800 mb-2">
+                Our Mission
+              </h4>
+              <p className="text-slate-600">
+                To empower 48,000 students each year by 2027 with the tools to
+                find, apply for, and win scholarships, making higher education
+                more accessible for all.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-16 px-25 md:py-24 bg-slate-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
+            Your Journey with ScholarMatch AI
+          </h2>
+          <p className="text-lg text-slate-700 text-center max-w-2xl mx-auto mb-16">
+            Follow these simple steps to navigate your scholarship application
+            process with ease and confidence.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {userJourneySteps.map((step, index) => (
+              <div
+                key={step.id}
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 p-4 rounded-full mb-6 inline-block">
+                  {React.cloneElement(step.icon, {
+                    className: "w-10 h-10 text-blue-600",
+                  })}
+                </div>
+                <h4 className="text-xl font-semibold text-slate-800 mb-2">
+                  {step.title}
+                </h4>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section id="team" className="py-16 px-20 md:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
+            Meet the Team
+          </h2>
+          <p className="text-lg text-slate-700 text-center max-w-2xl mx-auto mb-16">
+            The passionate individuals dedicated to making your scholarship
+            dreams a reality.
+          </p>
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-8">
+            {teamMembers.map((member, index) => (
+              <div
+                key={member.name}
+                className="bg-slate-50 p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <div className="mb-4 inline-block p-3 bg-gradient-to-r from-cyan-100 to-blue-100 rounded-full">
+                  {member.icon}
+                </div>
+                <h4 className="text-2xl font-semibold text-slate-800">
+                  {member.name}
+                </h4>
+                <p className="text-cyan-600 font-medium mb-2">{member.role}</p>
+                <p className="text-slate-600 text-sm">{member.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section
+        id="cta"
+        className="py-20 md:py-32 bg-gradient-to-r from-cyan-600 to-blue-600"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+            Ready to Find Your Perfect Scholarship?
+          </h2>
+          <p className="text-lg sm:text-xl text-cyan-100 mb-10 max-w-2xl mx-auto">
+            Join ScholarMatch AI today and take the first step towards securing
+            your future. Let us guide you.
+          </p>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#" // Replace with actual sign-up link
+            className="px-10 py-5 text-cyan-600 bg-white font-bold rounded-lg hover:bg-slate-100 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-flex items-center text-lg"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+            Start Your Journey Now <ChevronRight className="ml-2 w-6 h-6" />
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-8 bg-slate-800 text-slate-400 text-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <p>
+            &copy; {new Date().getFullYear()} ScholarMatch AI. All rights
+            reserved.
+          </p>
+          <p className="text-sm mt-1">
+            Empowering students, one scholarship at a time.
+          </p>
+        </div>
       </footer>
     </div>
   );
-}
+};
+
+export default Index;
