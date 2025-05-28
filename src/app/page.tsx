@@ -133,7 +133,7 @@ const Index = () => {
                 Login
               </a>
               <a
-                href="/signup"
+                href="/sign-up"
                 className="px-4 py-2 text-white font-medium rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 transition-all duration-300"
               >
                 Sign Up
