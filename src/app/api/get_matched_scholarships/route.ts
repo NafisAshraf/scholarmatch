@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     // Generate scholarship matches
     console.log("Calling OpenAI API for scholarship matches");
     const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-nano",
+      model: "gpt-4o-search-preview",
       messages: [
         getSystemPrompt(user_profile),
         {
