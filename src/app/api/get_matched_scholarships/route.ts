@@ -14,7 +14,7 @@ const getSystemPrompt = (user_profile: string) => ({
 
 ${user_profile}
 
-Find 3 relevant scholarships as possible. Ensure all fields are properly filled. If information is not available, use appropriate default values.`,
+Find 5-6 relevant scholarships as possible. Ensure all fields are properly filled. If information is not available, use appropriate default values. The deadline should be in the format "MM/DD/YYYY".`,
 });
 
 export async function POST(req: Request) {
