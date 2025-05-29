@@ -13,6 +13,7 @@ import {
   BookOpen,
   Award,
   Sparkles,
+  Users,
 } from "lucide-react";
 
 import { NavUser } from "@/components/nav-user";
@@ -62,11 +63,11 @@ const data = {
       url: "/documents",
       icon: FileText,
     },
-    // {
-    //   title: "Profile",
-    //   url: "/profile",
-    //   icon: User2,
-    // },
+    {
+      title: "Mentors",
+      url: "/mentors",
+      icon: Users,
+    },
   ],
 };
 

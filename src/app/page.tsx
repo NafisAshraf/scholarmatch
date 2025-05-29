@@ -11,6 +11,7 @@ import {
   Goal,
   UsersRound,
   BrainCircuit,
+  MessageSquare,
 } from "lucide-react";
 import React from "react";
 
@@ -260,6 +261,60 @@ const Index = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Mentors Section */}
+      <section id="mentors" className="py-16 px-20 md:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
+            Expert Mentorship
+          </h2>
+          <p className="text-lg text-slate-700 text-center max-w-2xl mx-auto mb-16">
+            Get personalized guidance from experienced professionals who
+            understand the scholarship landscape
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-slate-50 p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
+              <MessageSquare className="w-12 h-12 text-cyan-600 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-slate-800">
+                1:1 Consultations
+              </h4>
+              <p className="text-slate-600 text-sm">
+                Schedule personalized sessions with mentors to discuss your
+                scholarship strategy and get expert advice tailored to your
+                goals.
+              </p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
+              <ListChecks className="w-12 h-12 text-cyan-600 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-slate-800">
+                Application Review
+              </h4>
+              <p className="text-slate-600 text-sm">
+                Get detailed feedback on your scholarship applications, essays,
+                and supporting materials from experienced professionals.
+              </p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow duration-300">
+              <CalendarCheck className="w-12 h-12 text-cyan-600 mx-auto mb-4" />
+              <h4 className="text-xl font-semibold text-slate-800">
+                Ongoing Support
+              </h4>
+              <p className="text-slate-600 text-sm">
+                Receive continuous guidance throughout your scholarship journey,
+                from search to submission to acceptance.
+              </p>
+            </div>
+          </div>
+          <div className="text-center mt-12">
+            <a
+              href="/mentors"
+              className="inline-flex items-center px-6 py-3 text-cyan-600 font-medium hover:text-cyan-700 transition-colors"
+            >
+              Get Started <ChevronRight className="ml-2 w-5 h-5" />
+            </a>
           </div>
         </div>
       </section>
