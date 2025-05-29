@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import ScholarshipDocuments from "@/components/scholarship-documents";
 import LorGenerator from "@/components/lor-generator";
+import Review from "@/components/Review";
 
 const Index = () => {
   const params = useParams();
@@ -33,6 +34,11 @@ const Index = () => {
       label: "Documents",
       component: <ScholarshipDocuments />,
     },
+    // {
+    //   id: "tab-5",
+    //   label: "Review",
+    //   component: <Review />,
+    // },
   ];
 
   return (

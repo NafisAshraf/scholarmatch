@@ -40,20 +40,21 @@ const mentorsData = [
     id: 1,
     fullName: "Diana Kyryliuk",
     profilePicture: "/1.webp",
-    expertise: ["UX/UI Design", "Product Design", "Design Systems"],
-    bio: "Experienced UX/UI Designer with over 13 years in the industry. Passionate about creating user-centered designs and mentoring the next generation of designers. Currently leading design initiatives at United Nations (UNICC).",
-    profession: "Lead UX/UI Designer at United Nations (UNICC)",
-    experience: "13 years",
+    scholarship: "75% Scholarship at MIT",
+    expertise: ["Scholarship Applications", "SOP Writing", "Interview Prep"],
+    bio: "PhD student at MIT with extensive experience in securing scholarships. Successfully obtained multiple grants and awards. Passionate about helping students navigate the scholarship application process.",
+    profession: "PhD Student at MIT",
+    experience: "3 years",
     credentials: [
-      "Master's in Design",
-      "Google UX Certificate",
-      "Adobe Certified Expert",
+      "Full Bright Scholar",
+      "NSF Graduate Fellowship",
+      "MIT Presidential Fellowship",
     ],
     linkedin: "https://linkedin.com/in/dianakyryliuk",
-    gmail: "diana.kyryliuk@gmail.com",
+    gmail: "diana.kyryliuk@mit.edu",
     languages: ["English", "Spanish", "Ukrainian"],
     rating: 4.9,
-    location: "ES",
+    location: "US",
     sessions: 63,
     completedSessions: 3,
     available_sessions: [
@@ -65,14 +66,13 @@ const mentorsData = [
       {
         reviewer: "Maria Lopez",
         rating: 5,
-        comment:
-          "Diana is an amazing mentor! She helped me improve my portfolio.",
+        comment: "Diana helped me secure a 50% scholarship at Columbia!",
         date: "2024-04-10",
       },
       {
         reviewer: "Alex Smith",
         rating: 5,
-        comment: "Very insightful and supportive.",
+        comment: "Great guidance on scholarship essays.",
         date: "2024-03-22",
       },
     ],
@@ -81,24 +81,21 @@ const mentorsData = [
     id: 2,
     fullName: "Jonathan Stevens",
     profilePicture: "/2.webp",
-    expertise: [
-      "Technical Leadership",
-      "Software Architecture",
-      "Team Management",
-    ],
-    bio: "Senior Technical Lead with 15 years of experience in fintech. Expert in building scalable systems and leading high-performing engineering teams. Passionate about mentoring developers and sharing knowledge.",
-    profession: "Senior Technical Lead at Scotiabank",
-    experience: "15 years",
+    scholarship: "100% Scholarship at Stanford",
+    expertise: ["Research Proposals", "Grant Writing", "Academic Planning"],
+    bio: "PhD candidate at Stanford University, specializing in Computer Science. Recipient of multiple prestigious scholarships and research grants. Dedicated to mentoring students in their academic journey.",
+    profession: "PhD Candidate at Stanford University",
+    experience: "4 years",
     credentials: [
-      "Computer Science Degree",
-      "AWS Solutions Architect",
-      "Scrum Master Certified",
+      "Stanford Graduate Fellowship",
+      "Google PhD Fellowship",
+      "Microsoft Research Grant",
     ],
     linkedin: "https://linkedin.com/in/jonathanstevens",
-    gmail: "jonathan.stevens@gmail.com",
+    gmail: "jonathan.stevens@stanford.edu",
     languages: ["English", "French"],
     rating: 4.7,
-    location: "CA",
+    location: "US",
     sessions: 45,
     completedSessions: 3,
     available_sessions: [
@@ -110,13 +107,13 @@ const mentorsData = [
       {
         reviewer: "Sophie Tremblay",
         rating: 5,
-        comment: "Jonathan provided great advice on system architecture.",
+        comment: "Jonathan's advice on research proposals was invaluable.",
         date: "2024-05-01",
       },
       {
         reviewer: "Michael Brown",
         rating: 4,
-        comment: "Very knowledgeable and helpful.",
+        comment: "Very knowledgeable about fellowship applications.",
         date: "2024-04-15",
       },
     ],
@@ -125,20 +122,25 @@ const mentorsData = [
     id: 3,
     fullName: "Satyajit Roy",
     profilePicture: "/3.webp",
-    expertise: ["Product Design", "Design Strategy", "User Research"],
-    bio: "Design Head with 18 years of experience in creating innovative digital products. Led design teams at multiple startups and established companies. Expert in design thinking and user-centered design methodologies.",
-    profession: "Design Head at OMind Technologies",
-    experience: "18 years",
+    scholarship: "80% Scholarship at Oxford",
+    expertise: [
+      "International Scholarships",
+      "Research Funding",
+      "Academic Writing",
+    ],
+    bio: "DPhil student at Oxford University with extensive experience in international scholarship applications. Helped over 50 students secure funding for their studies.",
+    profession: "DPhil Student at Oxford University",
+    experience: "5 years",
     credentials: [
-      "Design Management Certificate",
-      "Stanford Design Thinking",
-      "IDEO Design Kit",
+      "Rhodes Scholar",
+      "Commonwealth Scholarship",
+      "Oxford Merit Award",
     ],
     linkedin: "https://linkedin.com/in/satyajitroy",
-    gmail: "satyajit.roy@gmail.com",
+    gmail: "satyajit.roy@oxford.ac.uk",
     languages: ["English", "Hindi", "Bengali"],
     rating: 5.0,
-    location: "IN",
+    location: "UK",
     sessions: 89,
     completedSessions: 5,
     available_sessions: [
@@ -150,13 +152,13 @@ const mentorsData = [
       {
         reviewer: "Priya Sharma",
         rating: 5,
-        comment: "Satyajit is a fantastic mentor for product design.",
+        comment: "Got into Cambridge with full funding thanks to Satyajit!",
         date: "2024-04-28",
       },
       {
         reviewer: "Rahul Das",
         rating: 5,
-        comment: "Great insights on user research.",
+        comment: "Excellent guidance on scholarship essays.",
         date: "2024-03-30",
       },
     ],
@@ -165,20 +167,17 @@ const mentorsData = [
     id: 4,
     fullName: "Bernie Chiu",
     profilePicture: "/4.webp",
-    expertise: ["E-commerce", "Engineering Management", "Startup Growth"],
-    bio: "Engineering professional with 10 years of experience in e-commerce and startup environments. Currently working at Rivo Commerce, focusing on scalable engineering solutions and team leadership.",
-    profession: "Engineering at Rivo Commerce",
-    experience: "10 years",
-    credentials: [
-      "Engineering Degree",
-      "PMP Certification",
-      "Agile Practitioner",
-    ],
+    scholarship: "90% Scholarship at Berkeley",
+    expertise: ["STEM Scholarships", "Research Proposals", "Technical Writing"],
+    bio: "PhD researcher at UC Berkeley specializing in Computer Science. Successfully secured multiple STEM scholarships and research grants. Passionate about helping students in technical fields.",
+    profession: "PhD Researcher at UC Berkeley",
+    experience: "3 years",
+    credentials: ["Berkeley Fellowship", "NSF GRFP", "Intel PhD Fellowship"],
     linkedin: "https://linkedin.com/in/berniechiu",
-    gmail: "bernie.chiu@gmail.com",
+    gmail: "bernie.chiu@berkeley.edu",
     languages: ["English", "Mandarin", "Cantonese"],
     rating: 4.8,
-    location: "TW",
+    location: "US",
     sessions: 34,
     completedSessions: 2,
     available_sessions: [
@@ -190,13 +189,13 @@ const mentorsData = [
       {
         reviewer: "Wei Lin",
         rating: 5,
-        comment: "Bernie helped me understand startup growth strategies.",
+        comment: "Bernie helped me get the Intel scholarship!",
         date: "2024-04-18",
       },
       {
         reviewer: "Emily Wong",
         rating: 4,
-        comment: "Very practical advice for e-commerce.",
+        comment: "Great advice on STEM research proposals.",
         date: "2024-03-25",
       },
     ],
@@ -205,17 +204,18 @@ const mentorsData = [
     id: 5,
     fullName: "Tau Jin",
     profilePicture: "/5.webp",
-    expertise: ["AI/ML", "Technical Strategy", "Product Development"],
-    bio: "Member of Technical Staff with 5 years of experience in AI and machine learning. Currently working at Harvey AI, Airbnb, and Stanford. Passionate about cutting-edge technology and mentoring aspiring technologists.",
-    profession: "Member of Technical Staff at Harvey AI, Airbnb, Stanford",
-    experience: "5 years",
+    scholarship: "100% Scholarship at Stanford",
+    expertise: ["AI/ML Scholarships", "Research Grants", "Technical Writing"],
+    bio: "PhD student at Stanford focusing on AI/ML. Recipient of multiple tech industry fellowships and research grants. Passionate about helping students secure funding in tech fields.",
+    profession: "PhD Student at Stanford University",
+    experience: "2 years",
     credentials: [
-      "PhD in Computer Science",
-      "Stanford AI Certificate",
-      "Google ML Engineer",
+      "Stanford AI Lab Fellowship",
+      "OpenAI Scholarship",
+      "Google PhD Fellowship",
     ],
     linkedin: "https://linkedin.com/in/taujin",
-    gmail: "tau.jin@gmail.com",
+    gmail: "tau.jin@stanford.edu",
     languages: ["English", "Mandarin"],
     rating: 4.6,
     location: "US",
@@ -230,13 +230,13 @@ const mentorsData = [
       {
         reviewer: "Kevin Lee",
         rating: 5,
-        comment: "Tau is very knowledgeable in AI/ML.",
+        comment: "Tau helped me secure an AI research grant.",
         date: "2024-05-02",
       },
       {
         reviewer: "Anna Kim",
         rating: 4,
-        comment: "Great mentor for technical strategy.",
+        comment: "Excellent guidance on fellowship applications.",
         date: "2024-04-12",
       },
     ],
@@ -245,21 +245,25 @@ const mentorsData = [
     id: 6,
     fullName: "Javier Ruiz Salvador",
     profilePicture: "/6.webp",
-    expertise: ["Product Management", "SaaS", "B2B Strategy"],
-    bio: "Staff Product Manager with 13 years of experience in product leadership and strategy. Expert in B2B SaaS products, product-led growth, and cross-functional team leadership. Passionate about building products that solve real problems.",
-    profession:
-      "Staff Product Manager | Product Leader | Trainer | SaaS | B2B | B2C",
-    experience: "13 years",
+    scholarship: "70% Scholarship at LSE",
+    expertise: [
+      "European Scholarships",
+      "Research Funding",
+      "Academic Writing",
+    ],
+    bio: "PhD candidate at London School of Economics with expertise in European scholarship programs. Experienced in helping students navigate international funding opportunities.",
+    profession: "PhD Candidate at LSE",
+    experience: "4 years",
     credentials: [
-      "MBA",
-      "Product Management Certificate",
-      "Lean Six Sigma Black Belt",
+      "Erasmus Mundus Scholar",
+      "LSE PhD Scholarship",
+      "EU Research Grant",
     ],
     linkedin: "https://linkedin.com/in/javierruizsalvador",
-    gmail: "javier.ruiz@gmail.com",
+    gmail: "j.r.salvador@lse.ac.uk",
     languages: ["English", "Spanish", "Portuguese"],
     rating: 4.9,
-    location: "ES",
+    location: "UK",
     sessions: 156,
     completedSessions: 8,
     available_sessions: [
@@ -271,13 +275,13 @@ const mentorsData = [
       {
         reviewer: "Carlos Mendes",
         rating: 5,
-        comment: "Javier is an expert in SaaS and product management.",
+        comment: "Secured Erasmus funding with Javier's help!",
         date: "2024-04-20",
       },
       {
         reviewer: "Lucia Garcia",
         rating: 5,
-        comment: "Very helpful and insightful mentor.",
+        comment: "Great mentor for European scholarships.",
         date: "2024-03-29",
       },
     ],
@@ -286,17 +290,22 @@ const mentorsData = [
     id: 7,
     fullName: "Sarah Chen",
     profilePicture: "/7.webp",
-    expertise: ["Data Science", "Machine Learning", "Analytics"],
-    bio: "Senior Data Scientist with expertise in machine learning, statistical analysis, and data visualization. Experienced in building data-driven products and leading analytics teams in tech companies.",
-    profession: "Senior Data Scientist at Meta",
-    experience: "8 years",
+    scholarship: "85% Scholarship at Harvard",
+    expertise: [
+      "Data Science Scholarships",
+      "Research Grants",
+      "Technical Writing",
+    ],
+    bio: "PhD student at Harvard specializing in Data Science. Successfully secured multiple scholarships and research grants. Passionate about helping students in quantitative fields.",
+    profession: "PhD Student at Harvard University",
+    experience: "3 years",
     credentials: [
-      "PhD in Statistics",
-      "Google Analytics Certified",
-      "Tableau Expert",
+      "Harvard Merit Fellowship",
+      "NSF Graduate Fellowship",
+      "Bloomberg Data Science PhD Grant",
     ],
     linkedin: "https://linkedin.com/in/sarahchen",
-    gmail: "sarah.chen@gmail.com",
+    gmail: "sarah.chen@harvard.edu",
     languages: ["English", "Mandarin", "Korean"],
     rating: 4.8,
     location: "US",
@@ -311,13 +320,13 @@ const mentorsData = [
       {
         reviewer: "David Park",
         rating: 5,
-        comment: "Sarah is a fantastic data science mentor.",
+        comment: "Sarah's guidance helped me get NSF funding!",
         date: "2024-04-25",
       },
       {
         reviewer: "Mina Lee",
         rating: 5,
-        comment: "Helped me a lot with machine learning concepts.",
+        comment: "Excellent mentor for data science scholarships.",
         date: "2024-03-31",
       },
     ],
@@ -325,17 +334,17 @@ const mentorsData = [
 ];
 
 const expertiseOptions = [
-  "UX/UI Design",
-  "Product Design",
-  "Technical Leadership",
-  "Software Architecture",
-  "Product Management",
-  "Data Science",
-  "Machine Learning",
-  "E-commerce",
-  "AI/ML",
-  "SaaS",
-  "Design Strategy",
+  "Scholarship Applications",
+  "SOP Writing",
+  "Interview Prep",
+  "Research Proposals",
+  "Grant Writing",
+  "Academic Planning",
+  "Technical Writing",
+  "International Scholarships",
+  "STEM Scholarships",
+  "European Scholarships",
+  "Data Science Scholarships",
 ];
 
 const locationOptions = ["US", "CA", "ES", "IN", "TW", "UK", "DE", "FR"];
@@ -344,6 +353,7 @@ interface Mentor {
   id: number;
   fullName: string;
   profilePicture: string;
+  scholarship: string;
   expertise: string[];
   bio: string;
   profession: string;
@@ -406,19 +416,21 @@ export default function MentorPage() {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-4">
-                    <Avatar className="h-20 w-20">
-                      <AvatarImage
-                        src={mentor.profilePicture}
-                        alt={mentor.fullName}
-                        className="object-cover"
-                      />
-                      <AvatarFallback className="text-lg">
-                        {mentor.fullName
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
+                    <div className="relative">
+                      <Avatar className="h-20 w-20">
+                        <AvatarImage
+                          src={mentor.profilePicture}
+                          alt={mentor.fullName}
+                          className="object-cover"
+                        />
+                        <AvatarFallback className="text-lg">
+                          {mentor.fullName
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
                         <h1 className="text-2xl font-bold text-gray-900">
@@ -432,6 +444,12 @@ export default function MentorPage() {
                         </Badge>
                       </div>
                       <p className="text-gray-600 mt-1">{mentor.profession}</p>
+                      <Badge
+                        variant="secondary"
+                        className=" bg-green-100 text-green-800 text-xs whitespace-nowrap"
+                      >
+                        {mentor.scholarship}
+                      </Badge>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -756,57 +774,6 @@ export default function MentorPage() {
                 </Button>
               </CardContent>
             </Card>
-
-            {/* Similar Mentor Profiles */}
-            {/* <Card className="border-0 shadow-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Similar mentor profiles
-                  </h3>
-                  <ChevronRight className="h-4 w-4 text-gray-400" />
-                </div>
-                <div className="space-y-3">
-                  {mentorsData
-                    .filter((m) => m.id !== mentor.id)
-                    .slice(0, 3)
-                    .map((similarMentor, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer"
-                      >
-                        <Avatar className="h-10 w-10">
-                          <AvatarImage
-                            src={similarMentor.profilePicture}
-                            alt={similarMentor.fullName}
-                            className="object-cover"
-                          />
-                          <AvatarFallback>
-                            {similarMentor.fullName
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-gray-900">
-                            {similarMentor.fullName}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            {similarMentor.profession}
-                          </div>
-                          <div className="flex items-center mt-1">
-                            <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                            <span className="text-xs text-gray-600 ml-1">
-                              {similarMentor.rating}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </CardContent>
-            </Card> */}
           </div>
         </div>
       </div>

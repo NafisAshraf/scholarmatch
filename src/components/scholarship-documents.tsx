@@ -356,24 +356,40 @@ const ScholarshipDocuments = () => {
         {viewMode === "tile" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {documents.map((category) => (
-              <DocumentCard
-                key={category.id}
-                category={category}
-                onUpload={(files) => handleFileUpload(category.id, files)}
-                onDelete={(fileId) => handleFileDelete(category.id, fileId)}
-                onSelect={() => setSelectedCategory(category.id)}
-              />
+              <div key={category.id}>
+                <DocumentCard
+                  category={category}
+                  onUpload={(files) => handleFileUpload(category.id, files)}
+                  onDelete={(fileId) => handleFileDelete(category.id, fileId)}
+                  onSelect={() => setSelectedCategory(category.id)}
+                />
+                {category.files.length > 0 && (
+                  <Button className="w-full mt-2" variant="outline">
+                    Review
+                  </Button>
+                )}
+              </div>
             ))}
           </div>
         ) : (
           <div className="space-y-6">
             {documents.map((category) => (
-              <DocumentListItem
-                key={category.id}
-                category={category}
-                onDeleteFile={(fileId) => handleFileDelete(category.id, fileId)}
-                onOpenUploadModal={() => setSelectedCategory(category.id)}
-              />
+              <div key={category.id}>
+                <DocumentListItem
+                  category={category}
+                  onDeleteFile={(fileId) =>
+                    handleFileDelete(category.id, fileId)
+                  }
+                  onOpenUploadModal={() => setSelectedCategory(category.id)}
+                />
+                {category.files.length > 0 && (
+                  <div className="flex justify-end">
+                    <Button className="mt-2" variant="gradient">
+                      Review
+                    </Button>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         )}

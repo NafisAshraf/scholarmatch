@@ -31,15 +31,9 @@ const mentorsData = [
     id: 1,
     fullName: "Diana Kyryliuk",
     profilePicture: "/1.webp",
-    expertise: ["UX/UI Design", "Product Design", "Design Systems"],
     bio: "Experienced UX/UI Designer with over 13 years in the industry. Passionate about creating user-centered designs and mentoring the next generation of designers. Currently leading design initiatives at United Nations (UNICC).",
-    profession: "Lead UX/UI Designer at United Nations (UNICC)",
-    experience: "13 years",
-    credentials: [
-      "Master's in Design",
-      "Google UX Certificate",
-      "Adobe Certified Expert",
-    ],
+    profession: "PhD Student at Stanford University",
+    scholarship: "75% Merit Scholarship at Stanford University",
     linkedin: "https://linkedin.com/in/dianakyryliuk",
     gmail: "diana.kyryliuk@gmail.com",
     languages: ["English", "Spanish", "Ukrainian"],
@@ -71,19 +65,9 @@ const mentorsData = [
     id: 2,
     fullName: "Jonathan Stevens",
     profilePicture: "/2.webp",
-    expertise: [
-      "Technical Leadership",
-      "Software Architecture",
-      "Team Management",
-    ],
     bio: "Senior Technical Lead with 15 years of experience in fintech. Expert in building scalable systems and leading high-performing engineering teams. Passionate about mentoring developers and sharing knowledge.",
-    profession: "Senior Technical Lead at Scotiabank",
-    experience: "15 years",
-    credentials: [
-      "Computer Science Degree",
-      "AWS Solutions Architect",
-      "Scrum Master Certified",
-    ],
+    profession: "PhD Researcher at MIT",
+    scholarship: "100% Full Ride at MIT",
     linkedin: "https://linkedin.com/in/jonathanstevens",
     gmail: "jonathan.stevens@gmail.com",
     languages: ["English", "French"],
@@ -114,15 +98,9 @@ const mentorsData = [
     id: 3,
     fullName: "Satyajit Roy",
     profilePicture: "/3.webp",
-    expertise: ["Product Design", "Design Strategy", "User Research"],
     bio: "Design Head with 18 years of experience in creating innovative digital products. Led design teams at multiple startups and established companies. Expert in design thinking and user-centered design methodologies.",
-    profession: "Design Head at OMind Technologies",
-    experience: "18 years",
-    credentials: [
-      "Design Management Certificate",
-      "Stanford Design Thinking",
-      "IDEO Design Kit",
-    ],
+    profession: "Masters Student at Oxford University",
+    scholarship: "50% Academic Excellence Scholarship at Oxford",
     linkedin: "https://linkedin.com/in/satyajitroy",
     gmail: "satyajit.roy@gmail.com",
     languages: ["English", "Hindi", "Bengali"],
@@ -153,15 +131,9 @@ const mentorsData = [
     id: 4,
     fullName: "Bernie Chiu",
     profilePicture: "/4.webp",
-    expertise: ["E-commerce", "Engineering Management", "Startup Growth"],
     bio: "Engineering professional with 10 years of experience in e-commerce and startup environments. Currently working at Rivo Commerce, focusing on scalable engineering solutions and team leadership.",
-    profession: "Engineering at Rivo Commerce",
-    experience: "10 years",
-    credentials: [
-      "Engineering Degree",
-      "PMP Certification",
-      "Agile Practitioner",
-    ],
+    profession: "PhD Candidate at Cambridge University",
+    scholarship: "80% Research Scholarship at Cambridge",
     linkedin: "https://linkedin.com/in/berniechiu",
     gmail: "bernie.chiu@gmail.com",
     languages: ["English", "Mandarin", "Cantonese"],
@@ -192,15 +164,9 @@ const mentorsData = [
     id: 5,
     fullName: "Tau Jin",
     profilePicture: "/5.webp",
-    expertise: ["AI/ML", "Technical Strategy", "Product Development"],
     bio: "Member of Technical Staff with 5 years of experience in AI and machine learning. Currently working at Harvey AI, Airbnb, and Stanford. Passionate about cutting-edge technology and mentoring aspiring technologists.",
-    profession: "Member of Technical Staff at Harvey AI, Airbnb, Stanford",
-    experience: "5 years",
-    credentials: [
-      "PhD in Computer Science",
-      "Stanford AI Certificate",
-      "Google ML Engineer",
-    ],
+    profession: "PhD Student at Harvard University",
+    scholarship: "40% Merit Scholarship at Harvard University",
     linkedin: "https://linkedin.com/in/taujin",
     gmail: "tau.jin@gmail.com",
     languages: ["English", "Mandarin"],
@@ -231,16 +197,9 @@ const mentorsData = [
     id: 6,
     fullName: "Javier Ruiz Salvador",
     profilePicture: "/6.webp",
-    expertise: ["Product Management", "SaaS", "B2B Strategy"],
     bio: "Staff Product Manager with 13 years of experience in product leadership and strategy. Expert in B2B SaaS products, product-led growth, and cross-functional team leadership. Passionate about building products that solve real problems.",
-    profession:
-      "Staff Product Manager | Product Leader | Trainer | SaaS | B2B | B2C",
-    experience: "13 years",
-    credentials: [
-      "MBA",
-      "Product Management Certificate",
-      "Lean Six Sigma Black Belt",
-    ],
+    profession: "Masters Student at ETH Zurich",
+    scholarship: "90% Excellence Scholarship at ETH Zurich",
     linkedin: "https://linkedin.com/in/javierruizsalvador",
     gmail: "javier.ruiz@gmail.com",
     languages: ["English", "Spanish", "Portuguese"],
@@ -271,15 +230,9 @@ const mentorsData = [
     id: 7,
     fullName: "Sarah Chen",
     profilePicture: "/7.webp",
-    expertise: ["Data Science", "Machine Learning", "Analytics"],
     bio: "Senior Data Scientist with expertise in machine learning, statistical analysis, and data visualization. Experienced in building data-driven products and leading analytics teams in tech companies.",
-    profession: "Senior Data Scientist at Meta",
-    experience: "8 years",
-    credentials: [
-      "PhD in Statistics",
-      "Google Analytics Certified",
-      "Tableau Expert",
-    ],
+    profession: "PhD Student at UC Berkeley",
+    scholarship: "60% Research Grant at UC Berkeley",
     linkedin: "https://linkedin.com/in/sarahchen",
     gmail: "sarah.chen@gmail.com",
     languages: ["English", "Mandarin", "Korean"],
@@ -308,25 +261,10 @@ const mentorsData = [
   },
 ];
 
-const expertiseOptions = [
-  "UX/UI Design",
-  "Product Design",
-  "Technical Leadership",
-  "Software Architecture",
-  "Product Management",
-  "Data Science",
-  "Machine Learning",
-  "E-commerce",
-  "AI/ML",
-  "SaaS",
-  "Design Strategy",
-];
-
 const locationOptions = ["US", "CA", "ES", "IN", "TW", "UK", "DE", "FR"];
 
 export default function MentorsPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedExpertise, setSelectedExpertise] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [selectedRating, setSelectedRating] = useState<string>("");
 
@@ -334,14 +272,7 @@ export default function MentorsPage() {
     return mentorsData.filter((mentor) => {
       const matchesSearch =
         mentor.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        mentor.profession.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        mentor.expertise.some((exp) =>
-          exp.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
-      const matchesExpertise =
-        !selectedExpertise ||
-        mentor.expertise.some((exp) => exp.includes(selectedExpertise));
+        mentor.profession.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesLocation =
         !selectedLocation || mentor.location === selectedLocation;
@@ -352,14 +283,11 @@ export default function MentorsPage() {
         (selectedRating === "4.5+" && mentor.rating >= 4.5) ||
         (selectedRating === "4.8+" && mentor.rating >= 4.8);
 
-      return (
-        matchesSearch && matchesExpertise && matchesLocation && matchesRating
-      );
+      return matchesSearch && matchesLocation && matchesRating;
     });
-  }, [searchTerm, selectedExpertise, selectedLocation, selectedRating]);
+  }, [searchTerm, selectedLocation, selectedRating]);
 
   const clearFilters = () => {
-    setSelectedExpertise("");
     setSelectedLocation("");
     setSelectedRating("");
   };
@@ -381,7 +309,7 @@ export default function MentorsPage() {
           <div className="relative bg-background">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
-              placeholder="Search mentors by name, profession, or expertise..."
+              placeholder="Search mentors by name or profession..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 h-12 text-base"
@@ -390,32 +318,6 @@ export default function MentorsPage() {
 
           {/* Filters */}
           <div className="flex flex-wrap gap-4 items-center">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="gap-2">
-                  <Filter className="h-4 w-4" />
-                  Expertise
-                  {selectedExpertise && (
-                    <Badge variant="secondary" className="ml-1">
-                      {selectedExpertise}
-                    </Badge>
-                  )}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Select Expertise</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {expertiseOptions.map((expertise) => (
-                  <DropdownMenuItem
-                    key={expertise}
-                    onClick={() => setSelectedExpertise(expertise)}
-                  >
-                    {expertise}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="gap-2">
@@ -469,7 +371,7 @@ export default function MentorsPage() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {(selectedExpertise || selectedLocation || selectedRating) && (
+            {(selectedLocation || selectedRating) && (
               <Button
                 variant="ghost"
                 onClick={clearFilters}
@@ -497,7 +399,7 @@ export default function MentorsPage() {
               className="hover:shadow-lg transition-shadow duration-300 bg-background backdrop-blur-sm border-border/50"
             >
               <CardContent className="p-6 flex flex-col h-full">
-                {/* Header with Avatar and Availability */}
+                {/* Header with Avatar and Rating */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-20 w-20">
@@ -523,9 +425,13 @@ export default function MentorsPage() {
                       </p>
                     </div>
                   </div>
-                  {/* <Badge
-                   
-                  </Badge> */}
+                  <Badge
+                    variant="secondary"
+                    className="flex items-center gap-1"
+                  >
+                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    {mentor.rating}
+                  </Badge>
                 </div>
 
                 {/* Profession */}
@@ -533,36 +439,10 @@ export default function MentorsPage() {
                   {mentor.profession}
                 </p>
 
-                {/* Experience and Rating */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-sm text-muted-foreground">
-                    <span className="font-medium">Experience:</span>{" "}
-                    {mentor.experience}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium">{mentor.rating}</span>
-                    <span className="text-muted-foreground text-sm">
-                      ({mentor.reviews.length} reviews)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Expertise Tags */}
-                <div className="mb-4">
-                  <div className="flex flex-wrap gap-1">
-                    {mentor.expertise.slice(0, 3).map((skill, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {skill}
-                      </Badge>
-                    ))}
-                    {mentor.expertise.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{mentor.expertise.length - 3} more
-                      </Badge>
-                    )}
-                  </div>
-                </div>
+                {/* Scholarship */}
+                <p className="text-sm text-muted-foreground mb-4">
+                  {mentor.scholarship}
+                </p>
 
                 {/* Languages */}
                 <div className="mb-4">
