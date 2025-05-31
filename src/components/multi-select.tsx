@@ -2,8 +2,8 @@ import MultipleSelector, { Option } from "@/components/ui/multiselect";
 
 interface MultiSelectProps {
   id?: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: string[];
+  onChange: (value: string[]) => void;
   required?: boolean;
   options: Option[];
   placeholder?: string;
@@ -16,9 +16,11 @@ export default function MultiSelect({
   onChange,
   required,
   options,
-  placeholder = "Select an option",
+  placeholder = "Select options",
   label,
 }: MultiSelectProps) {
+  const selectedOptions = value.map((v) => ({ value: v, label: v }));
+
   return (
     <div className="*:not-first:mt-2">
       <MultipleSelector
@@ -26,8 +28,8 @@ export default function MultiSelect({
         defaultOptions={options}
         placeholder={placeholder}
         emptyIndicator={<p className="text-center text-sm">No results found</p>}
-        value={value ? [{ value, label: value }] : []}
-        onChange={(options) => onChange(options[0]?.value || "")}
+        value={selectedOptions}
+        onChange={(options) => onChange(options.map((opt) => opt.value))}
       />
     </div>
   );

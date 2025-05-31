@@ -41,16 +41,16 @@ const fundingOptions = [
 ];
 
 export default function SearchPage() {
-  const [nationality, setNationality] = useState("");
-  const [destination, setDestination] = useState("");
-  const [degree, setDegree] = useState("");
-  const [subject, setSubject] = useState("");
-  const [funding, setFunding] = useState("");
+  const [nationality, setNationality] = useState<string[]>([]);
+  const [destination, setDestination] = useState<string[]>([]);
+  const [degree, setDegree] = useState<string[]>([]);
+  const [subject, setSubject] = useState<string[]>([]);
+  const [funding, setFunding] = useState<string[]>([]);
 
   return (
     <div className="min-h-screen flex flex-col items-center py-16 bg-gradient">
       <h1 className="text-5xl font-bold text-gradient py-16">
-        Country Specific Scholarships
+        Search Scholarships
       </h1>
       <div className="bg-white/90 dark:bg-transparent rounded-lg shadow-lg p-6 flex flex-col w-full max-w-5xl">
         <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -90,6 +90,9 @@ export default function SearchPage() {
           <button
             className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-bold px-8 rounded-lg flex items-center gap-2 mt-6 md:mt-0 self-end md:self-auto"
             type="button"
+            onClick={() => {
+              console.log(nationality, destination, degree, subject, funding);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

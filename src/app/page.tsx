@@ -310,7 +310,7 @@ const Index = () => {
           </div>
           <div className="text-center mt-12">
             <a
-              href="/mentors"
+              href="/sign-up-mentor"
               className="inline-flex items-center px-6 py-3 text-cyan-600 font-medium hover:text-cyan-700 transition-colors"
             >
               Get Started <ChevronRight className="ml-2 w-5 h-5" />

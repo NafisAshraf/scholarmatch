@@ -47,9 +47,30 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith("/update-password") &&
     !request.nextUrl.pathname.startsWith("/forgot-password") &&
     !request.nextUrl.pathname.startsWith("/error") &&
-    request.nextUrl.pathname !== "/"
+    request.nextUrl.pathname !== "/" &&
+    request.nextUrl.pathname !== "/sign-up-mentor"
   ) {
     // no user, potentially respond by redirecting the user to the login page
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  // 🔒 Restrict /admin/* to a specific user
+  else if (
+    request.nextUrl.pathname.startsWith("/admin") &&
+    user?.email !== "admin@scholarmatch.ai"
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  // 🔒 Restrict /mentor/* to a specific user
+  else if (
+    request.nextUrl.pathname.startsWith("/mentor") &&
+    user?.user_metadata.role !== "mentor"
+  ) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

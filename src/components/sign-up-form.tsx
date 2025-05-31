@@ -40,9 +40,13 @@ export function SignUpForm({
         email,
         password,
         options: {
-          // emailRedirectTo: `${window.location.origin}/matched-scholarships`,
+          emailRedirectTo: `${window.location.origin}/matched-scholarships`,
           data: {
             full_name: fullName,
+            role: "user",
+            status: "active",
+            profile_picture_url: "",
+            is_profile_complete: false,
           },
         },
       });
@@ -122,6 +126,14 @@ export function SignUpForm({
               Already have an account?{" "}
               <Link href="/login" className="underline underline-offset-4">
                 Login
+              </Link>
+            </div>
+            <div className="mt-4 text-center text-sm">
+              <Link
+                href="/sign-up-mentor"
+                className="underline underline-offset-4"
+              >
+                Sign up as a mentor
               </Link>
             </div>
           </form>

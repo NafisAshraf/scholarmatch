@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/login-form";
+import { MentorSignUpForm } from "@/components/mentors/mentor-sign-up";
 import { GraduationCap } from "lucide-react";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function Page() {
             </div>
           </Link>
         </div>
-        <LoginForm />
+        <MentorSignUpForm />
       </div>
     </div>
   );

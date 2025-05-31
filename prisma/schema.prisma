@@ -320,7 +320,10 @@ model users {
   mfa_factors                 mfa_factors[]
   one_time_tokens             one_time_tokens[]
   sessions                    sessions[]
+  appointments                appointments[]
+  mentors                     mentors?
   profiles                    profiles?
+  reviews                     reviews[]
   user_answers                user_answers[]
   user_documents              user_documents[]
   user_scholarships           user_scholarships[]
@@ -575,6 +578,78 @@ model user_tasks {
   subtasks       subtasks[]
   scholarships   scholarships @relation(fields: [scholarship_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users          users        @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model appointments {
+  id          String    @id @db.Uuid
+  student_id  String    @db.Uuid
+  timeslot_id String    @unique @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  users       users     @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_student")
+  timeslots   timeslots @relation(fields: [timeslot_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_timeslot")
+  reviews     reviews?
+
+  @@schema("public")
+}
+
+model mentors {
+  user_id        String      @id @db.Uuid
+  name           String
+  email          String      @unique
+  profile_pic    String?
+  date_of_birth  DateTime?   @db.Date
+  gender         String?
+  nationality    String?
+  languages      String[]    @default([])
+  profession     String?
+  scholarship    String?
+  bio            String?
+  rating_average Float?      @default(0) @db.Real
+  rating_count   Int?        @default(0)
+  linkedin       String?
+  gmail          String?
+  drive_link     String?
+  country        String?
+  verified       Boolean?    @default(false)
+  session_count  Int?        @default(0)
+  users          users       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_mentor_user")
+  reviews        reviews[]
+  timeslots      timeslots[]
+
+  @@schema("public")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model reviews {
+  id             String       @id @db.Uuid
+  student_id     String       @db.Uuid
+  mentor_id      String       @db.Uuid
+  appointment_id String       @unique @db.Uuid
+  rating         Float        @db.Real
+  comment        String?
+  created_at     DateTime?    @default(now()) @db.Timestamp(6)
+  appointments   appointments @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_review_appointment")
+  mentors        mentors      @relation(fields: [mentor_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_review_mentor")
+  users          users        @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_review_student")
+
+  @@schema("public")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model timeslots {
+  id           String        @id @db.Uuid
+  mentor_id    String        @db.Uuid
+  date         DateTime?     @db.Date
+  day_of_week  Int?
+  start_time   DateTime      @db.Time(6)
+  end_time     DateTime?     @db.Time(6)
+  is_recurring Boolean?      @default(false)
+  is_canceled  Boolean?      @default(false)
+  created_at   DateTime?     @default(now()) @db.Timestamp(6)
+  appointments appointments?
+  mentors      mentors       @relation(fields: [mentor_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_timeslot_mentor")
 
   @@schema("public")
 }

@@ -33,13 +33,22 @@ export function LoginForm({
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) throw error;
       // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/dashboard");
+      if (email === "admin@scholarmatch.ai") {
+        router.push("/admin");
+      } else if (
+        // first check if user.user_metadata has "role" property or not, then check if it is "mentor" or "student"
+        data?.user?.user_metadata.role === "mentor"
+      ) {
+        router.push("/mentor");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
